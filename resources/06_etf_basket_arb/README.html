@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 06 — ETF / Basket Arb · README</title>
+<style>
+  :root { --fg:#1a1a1a; --muted:#666; --accent:#0a66c2; --bg:#fafafa; --border:#e5e5e5; --alt:#f4f4f4; }
+  * { box-sizing: border-box; }
+  body { font: 16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif; color:var(--fg); background:var(--bg); margin:0; padding:0; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 32px 24px 80px; }
+  header { border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-bottom: 24px; }
+  h1 { font-size: 28px; margin: 0 0 8px; }
+  h2 { font-size: 20px; margin-top: 32px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+  p { margin: 8px 0; }
+  a { color: var(--accent); text-decoration: none; }
+  code { background: #f1f1f1; padding: 1px 5px; border-radius: 3px; font-size: 0.92em; font-family: ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
+  ul, ol { padding-left: 22px; }
+  li { margin: 5px 0; }
+  .meta { color: var(--muted); font-size: 14px; }
+  .file-list a { display: block; padding: 4px 0; }
+  blockquote { border-left: 4px solid var(--accent); margin: 16px 0; padding: 4px 16px; background: #f0f7ff; color: #333; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+<h1>Module 06 — ETF / Basket Arbitrage</h1>
+<p class="meta">The structural edge the team missed in P4. If you can identify a basket and its constituents, the trade is mechanical.</p>
+<p><a href="../00_README.html">← curriculum home</a></p>
+</header>
+
+<blockquote>
+<b>What you'll know after this module:</b> What a basket (or synthetic ETF) is. How to derive basket weights from the round spec or from data. How to compute NAV (net asset value) every tick. The structural arb trade: when market price diverges from NAV, buy the cheap side and sell the rich side. How to size and unwind the position. The PEBBLE-style "inner rebalancing" trick that gives zero-risk PnL.
+</blockquote>
+
+<h2>Why this module comes early (week 7)</h2>
+<p>The team's P4 attempt dropped out at Round 3. The post-mortem suggests they didn't solve basket arb cleanly. Basket rounds are a <b>top-3 differentiator</b> in P3 and P4 — teams that nailed it climbed past teams that didn't. This module is the curriculum's corrective.</p>
+
+<h2>Files in this module</h2>
+<div class="file-list">
+  <a href="explain.html">explain.html</a> — what a basket is, why the trade is mechanical.
+  <a href="source.html">source.html</a> — BIS ETF paper, Timo's P3 R3 GIFT_BASKET code, supplementary reading.
+  <a href="extract.html">extract.html</a> — NAV formula, weights solver, trade signal, inner rebalancing.
+  <a href="exercises.html">exercises.html</a> — 5 hands-on exercises on P3/P4 data.
+  <a href="code/solve_weights.py">code/solve_weights.py</a> — solve for basket weights via OLS.
+  <a href="code/nav.py">code/nav.py</a> — compute NAV and the basket-vs-NAV spread.
+  <a href="code/basket_arb.py">code/basket_arb.py</a> — full basket arb strategy + backtester.
+  <a href="code/inner_rebalance.py">code/inner_rebalance.py</a> — PEBBLE-style zero-risk inner rebalancing.
+</div>
+
+<h2>Where this shows up in Prosperity</h2>
+<ul>
+  <li><b>GIFT_BASKET (P3 R3, P4 R?)</b> = 4×CHOCOLATE + 6×STRAWBERRIES + 1×ROSES. Canonical basket.</li>
+  <li><b>PEBBLE (P4)</b> = some weighted sum of 5 assets = 50,000. Inner rebalancing gives pure PnL.</li>
+  <li><b>PICNIC_BASKET (P3 R2)</b> = similar pattern.</li>
+  <li><b>VOLCANIC_ROCK / VOUCHER_* (P4)</b> = voucher pairs, a different but related structure.</li>
+</ul>
+
+<h2>Time budget</h2>
+<p>1.5 weeks (week 7-8 of curriculum, including a review week at 8). 12-15 hours each.</p>
+
+<h2>Prerequisites</h2>
+<p>Module 02 (microstructure), module 04 (mean reversion). Module 05 (cointegration) for the multivariate version. Module 15 (Python toolkit) for `numpy` and `pandas`.</p>
+
+<footer style="margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--border); font-size: 13px; color: var(--muted);">
+<p>Once done, move to <a href="../07_options_greeks/README.html">module 07 — Options & Greeks</a>.</p>
+</footer>
+
+</div>
+</body>
+</html>
