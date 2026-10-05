@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glossary — IMC Prosperity Curriculum</title>
+<style>
+  :root { --fg:#1a1a1a; --muted:#666; --accent:#0a66c2; --bg:#fafafa; --card:#fff; --border:#e5e5e5; }
+  * { box-sizing: border-box; }
+  body { font: 16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif; color:var(--fg); background:var(--bg); margin:0; padding:0; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 32px 24px 80px; }
+  header { border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-bottom: 24px; }
+  h1 { font-size: 30px; margin: 0 0 8px; line-height: 1.2; }
+  h2 { font-size: 22px; margin-top: 36px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+  h3 { font-size: 17px; margin: 22px 0 4px; color: var(--accent); font-family: ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-weight: 600; }
+  p { margin: 6px 0 10px; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  code { font-family: ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; background: #f1f1f1; padding: 1px 5px; border-radius: 3px; font-size: 0.92em; }
+  ul, ol { padding-left: 22px; }
+  li { margin: 6px 0; }
+  .meta { color: var(--muted); font-size: 14px; }
+  .jump { background: #fff; border: 1px solid var(--border); border-radius: 6px; padding: 10px 14px; margin: 16px 0; font-size: 14px; }
+  .jump a { margin-right: 10px; display: inline-block; }
+  .term { background: #fff; border-left: 3px solid var(--accent); padding: 8px 16px; margin: 8px 0 12px; border-radius: 0 4px 4px 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+<h1>Glossary</h1>
+<p class="meta">Every term used in the curriculum, alphabetized. Each definition is plain English — no jargon, no formulas. Cross-links point to where the term is taught.</p>
+<p><a href="00_README.html">← back to README</a></p>
+</header>
+
+<div class="jump">
+<b>Jump:</b>
+<a href="#A">A</a><a href="#B">B</a><a href="#C">C</a><a href="#D">D</a>
+<a href="#E">E</a><a href="#F">F</a><a href="#G">G</a><a href="#H">H</a>
+<a href="#I">I</a><a href="#J">J</a><a href="#K">K</a><a href="#L">L</a>
+<a href="#M">M</a><a href="#N">N</a><a href="#O">O</a><a href="#P">P</a>
+<a href="#Q">Q</a><a href="#R">R</a><a href="#S">S</a><a href="#T">T</a>
+<a href="#U">U</a><a href="#V">V</a><a href="#W">W</a><a href="#Z">Z</a>
+</div>
+
+<h2 id="A">A</h2>
+
+<div class="term">
+<h3>Adverse selection</h3>
+<p>The risk that the person willing to trade with you knows something you don't. If you keep quoting a buy price of $100 and a smarter trader keeps selling to you, they only do it when they think the true price is below $100. You get picked off. Market-makers care a lot about this. <a href="02_microstructure/explain.html">→ module 02</a></p>
+</div>
+
+<div class="term">
+<h3>Ask (offer)</h3>
+<p>The lowest price at which someone is willing to <i>sell</i> the asset. The "sell" side of the order book. See <i>bid-ask spread</i>.</p>
+</div>
+
+<div class="term">
+<h3>Avellaneda–Stoikov</h3>
+<p>A famous formula (Avellaneda &amp; Stoikov, 2008) for what prices a market-maker should quote. It balances making money on the spread against the risk of holding inventory. <a href="03_market_making/explain.html">→ module 03</a></p>
+</div>
+
+<h2 id="B">B</h2>
+
+<div class="term">
+<h3>Basket</h3>
+<p>A fake "asset" defined as a fixed combination of other real assets. E.g., GIFT_BASKET = 4 chocolates + 6 strawberries + 1 rose. If you can buy the basket and sell the pieces (or vice versa) for more than the basket price, you have a risk-free trade. <a href="06_etf_basket_arb/explain.html">→ module 06</a></p>
+</div>
+
+<div class="term">
+<h3>Bid</h3>
+<p>The highest price at which someone is willing to <i>buy</i> the asset. The "buy" side of the order book.</p>
+</div>
+
+<div class="term">
+<h3>Bid-ask spread</h3>
+<p>The difference between the best bid and the best ask. If bid is $99 and ask is $101, the spread is $2. The market-maker who posted those quotes makes $2 per round-trip trade (buy at $99, sell at $101). <a href="02_microstructure/explain.html">→ module 02</a></p>
+</div>
+
+<div class="term">
+<h3>Black–Scholes</h3>
+<p>A formula for what an option should be worth. Inputs are the underlying price, strike, time-to-expiry, risk-free rate, and volatility. Outputs are call/put prices plus four "Greeks" (sensitivities). <a href="07_options_greeks/explain.html">→ module 07</a></p>
+</div>
+
+<div class="term">
+<h3>Book depth</h3>
+<p>How many buy/sell orders are stacked at each price level. Deep book = lots of liquidity = your trade barely moves the price. Thin book = small trade can move price a lot.</p>
+</div>
+
+<h2 id="C">C</h2>
+
+<div class="term">
+<h3>Call option</h3>
+<p>A contract that gives the holder the <i>right but not obligation</i> to buy the underlying asset at a fixed "strike" price on or before expiry. Worth more when the underlying price is above the strike. <a href="07_options_greeks/explain.html">→ module 07</a></p>
+</div>
+
+<div class="term">
+<h3>Cointegration</h3>
+<p>Two prices that wander around randomly individually but their <i>difference</i> stays roughly constant. If chocolate and cocoa-prices are cointegrated, you can bet on their gap closing. <a href="05_cointegration/explain.html">→ module 05</a></p>
+</div>
+
+<div class="term">
+<h3>Cross-exchange arb</h3>
+<p>Same product, two exchanges, different prices. Buy low on one, sell high on the other, lock in the spread. Prosperity rounds that have two exchanges (ORCHIDS, MACARONS) reward this. <a href="08_cross_exchange_arb/explain.html">→ module 08</a></p>
+</div>
+
+<h2 id="D">D</h2>
+
+<div class="term">
+<h3>Delta (Greek)</h3>
+<p>How much an option's price moves when the underlying moves by $1. Delta of 0.5 means option goes up $0.50 for each $1 underlying rally. You "delta-hedge" by holding underlying so total delta = 0. <a href="07_options_greeks/explain.html">→ module 07</a></p>
+</div>
+
+<div class="term">
+<h3>Drawdown</h3>
+<p>The peak-to-trough decline of your PnL. If your PnL was +500 and is now +120, you have a 380 drawdown. Survivorship cares a lot about how <i>deep</i> drawdowns get.</p>
+</div>
+
+<h2 id="E">E</h2>
+
+<div class="term">
+<h3>EMA (exponential moving average)</h3>
+<p>A smoothed average of recent prices where recent prices count more. EMA(20) of price is a rolling mean that forgets the distant past fast. Used as a "fair value" estimate.</p>
+</div>
+
+<div class="term">
+<h3>ETF (Exchange-Traded Fund)</h3>
+<p>A fund that holds a basket of assets and trades like a stock. The "creation" process lets authorized participants swap shares for the underlying — that's what keeps ETF price and NAV aligned. <a href="06_etf_basket_arb/explain.html">→ module 06</a></p>
+</div>
+
+<div class="term">
+<h3>Exchange score</h3>
+<p>See <i>NAV</i>. In Prosperity, baskets behave like ETFs.</p>
+</div>
+
+<h2 id="F">F</h2>
+
+<div class="term">
+<h3>Fair value</h3>
+<p>The price you think the asset <i>should</i> be at, given everything you know. Trade when the market price is far from fair value. <a href="11_bayesian_signals/explain.html">→ module 11</a></p>
+</div>
+
+<div class="term">
+<h3>FILL OR KILL</h3>
+<p>An order that must execute immediately in full or be cancelled. The opposite of a limit order that rests on the book.</p>
+</div>
+
+<h2 id="G">G</h2>
+
+<div class="term">
+<h3>Gamma (Greek)</h3>
+<p>How fast delta changes. High gamma means small underlying moves cause big delta swings, so delta-hedging gets expensive. <a href="07_options_greeks/explain.html">→ module 07</a></p>
+</div>
+
+<div class="term">
+<h3>GARCH</h3>
+<p>A model that estimates today's volatility from recent squared returns. Volatility clusters (calm then stormy then calm) and GARCH captures that pattern. <a href="10_volatility/explain.html">→ module 10</a></p>
+</div>
+
+<div class="term">
+<h3>Greeks</h3>
+<p>Delta, gamma, vega, theta — the four main sensitivities of an option's price to its inputs. Named with Greek letters. <a href="07_options_greeks/explain.html">→ module 07</a></p>
+</div>
+
+<h2 id="H">H</h2>
+
+<div class="term">
+<h3>Half-life</h3>
+<p>The typical time it takes a mean-reverting process to close half its gap to equilibrium. Half-life of 5 ticks means z-score of 2 typically decays to 1 in 5 ticks. <a href="04_mean_reversion/explain.html">→ module 04</a></p>
+</div>
+
+<div class="term">
+<h3>Hedging</h3>
+<p>Taking an offsetting position to cancel out some unwanted exposure. Short the S&amp;P to hedge a long stock portfolio. Sell calls against your long stock to hedge upside. <a href="07_options_greeks/explain.html">→ module 07</a></p>
+</div>
+
+<h2 id="I">I</h2>
+
+<div class="term">
+<h3>Implied volatility (IV)</h3>
+<p>The volatility number you'd have to plug into Black–Scholes to make it spit out the market price of the option. If everyone is nervous, options cost more → IV is high. <a href="07_options_greeks/explain.html">→ module 07</a></p>
+</div>
+
+<div class="term">
+<h3>Inventory</h3>
+<p>Your current position. If you've bought 50 and sold 30, inventory is +20 (long 20). Market-makers carry inventory and get picked off when it goes against them. <a href="03_market_making/explain.html">→ module 03</a></p>
+</div>
+
+<div class="term">
+<h3>Inventory skew</h3>
+<p>Adjusting your quoted prices to push your inventory back toward zero. If you're long 100, lower both your bid and your ask to encourage selling to you. <a href="03_market_making/explain.html">→ module 03</a></p>
+</div>
+
+<h2 id="K">K</h2>
+
+<div class="term">
+<h3>Kelly criterion</h3>
+<p>A formula for the optimal bet size given your edge and odds. In trading: f* = (edge / odds). Often used at fractional Kelly (½ or ¼) for safety. <a href="14_risk_position_sizing/explain.html">→ module 14</a></p>
+</div>
+
+<h2 id="L">L</h2>
+
+<div class="term">
+<h3>Limit order</h3>
+<p>An order to buy/sell at a specified price or better. Sits on the book until filled or cancelled. The opposite of a market order.</p>
+</div>
+
+<div class="term">
+<h3>Limit order book (LOB)</h3>
+<p>The list of all unfilled limit orders, sorted by price. Buy side and sell side. The whole world of market-making lives in this list. <a href="02_microstructure/explain.html">→ module 02</a></p>
+</div>
+
+<div class="term">
+<h3>Liquidity</h3>
+<p>How easily you can trade without moving the price. A deep book with tight spreads is liquid; a thin book with wide spreads is illiquid.</p>
+</div>
+
+<div class="term">
+<h3>Long / short</h3>
+<p>Long = you own the asset (positive position). Short = you've sold something you don't own and must return it later (negative position).</p>
+</div>
+
+<h2 id="M">M</h2>
+
+<div class="term">
+<h3>Market impact</h3>
+<p>The price movement caused by your own trade. A big market order eats through the book and pushes the price. The deeper the book, the less impact per share.</p>
+</div>
+
+<div class="term">
+<h3>Market order</h3>
+<p>An order to buy/sell right now at the best available price. Fills immediately but you pay the spread. Opposite of limit order.</p>
+</div>
+
+<div class="term">
+<h3>Market making</h3>
+<p>Posting both buy and sell limit orders and earning the spread. The core game in Prosperity's AMETHYSTS-style rounds. <a href="03_market_making/explain.html">→ module 03</a></p>
+</div>
+
+<div class="term">
+<h3>Mean reversion</h3>
+<p>The price wanders but is pulled back toward a center. Trade: bet that a big move will reverse. <a href="04_mean_reversion/explain.html">→ module 04</a></p>
+</div>
+
+<div class="term">
+<h3>Microprice</h3>
+<p>A more accurate mid than just (bid+ask)/2. Microprice weights the inside levels by volume: (bid_volume * ask + ask_volume * bid) / (bid_volume + ask_volume). If bid has more size, microprice leans up. <a href="02_microstructure/explain.html">→ module 02</a></p>
+</div>
+
+<div class="term">
+<h3>Mid price</h3>
+<p>(Best bid + best ask) / 2. The "center" of the spread. A first approximation of fair value.</p>
+</div>
+
+<h2 id="N">N</h2>
+
+<div class="term">
+<h3>NAV (Net Asset Value)</h3>
+<p>For a basket: the sum of its constituents at current market prices (using the formula). If the basket market price is below NAV, buy basket / sell constituents. <a href="06_etf_basket_arb/explain.html">→ module 06</a></p>
+</div>
+
+<h2 id="O">O</h2>
+
+<div class="term">
+<h3>Ornstein–Uhlenbeck (OU)</h3>
+<p>The math model behind mean reversion. Continuous-time: dx = θ(μ − x)dt + σdW. Discretized: x_{t+1} = α + β·x_t + ε. The β tells you how strongly it pulls back. <a href="04_mean_reversion/explain.html">→ module 04</a></p>
+</div>
+
+<h2 id="P">P</h2>
+
+<div class="term">
+<h3>Pairs trading</h3>
+<p>Find two prices that move together (cointegrated). When their gap is wide, bet the gap closes. <a href="05_cointegration/explain.html">→ module 05</a></p>
+</div>
+
+<div class="term">
+<h3>PnL (Profit and Loss)</h3>
+<p>The running total of how much money you've made. Marked-to-market: at each instant, what would you make if you flattened your book right now. The score Prosperity ranks you on.</p>
+</div>
+
+<div class="term">
+<h3>Position</h3>
+<p>Same as inventory. The number of units you currently hold (positive = long, negative = short).</p>
+</div>
+
+<div class="term">
+<h3>Put option</h3>
+<p>A contract that gives the holder the <i>right but not obligation</i> to <i>sell</i> the underlying at a fixed strike on or before expiry. Worth more when the underlying is <i>below</i> the strike. <a href="07_options_greeks/explain.html">→ module 07</a></p>
+</div>
+
+<h2 id="Q">Q</h2>
+
+<div class="term">
+<h3>Queue priority</h3>
+<p>If 100 people are all bidding $99, who fills first when a market sell comes in? First one in line. Prosperity's exchange has no queue priority by default (pro-rata), which creates its own alpha. <a href="17_microstructure_advanced/explain.html">→ module 17</a></p>
+</div>
+
+<div class="term">
+<h3>Quote</h3>
+<p>A pair of orders: a bid and an ask. "What are you quoting?" = "What are your bid and ask right now?"</p>
+</div>
+
+<h2 id="R">R</h2>
+
+<div class="term">
+<h3>Reservation price</h3>
+<p>The price at which you'd be indifferent between trading and not trading. Set by your inventory and the volatility. Avellaneda–Stoikov centers your bid/ask around this. <a href="03_market_making/explain.html">→ module 03</a></p>
+</div>
+
+<div class="term">
+<h3>Round-trip</h3>
+<p>Open a position, then close it. Profit = sell price − buy price − fees. The PnL from one complete cycle.</p>
+</div>
+
+<h2 id="S">S</h2>
+
+<div class="term">
+<h3>Sharpe ratio</h3>
+<p>Mean return divided by standard deviation of returns. Risk-adjusted performance. Sharpe &gt; 1 is decent; &gt; 2 is good; &gt; 3 is exceptional.</p>
+</div>
+
+<div class="term">
+<h3>Slippage</h3>
+<p>The difference between the price you expected to get and the price you actually got. Usually because the book moved while your order was in flight, or your order ate through multiple levels.</p>
+</div>
+
+<div class="term">
+<h3>Spread</h3>
+<p>See <i>bid-ask spread</i>. The market-maker's gross profit per round-trip.</p>
+</div>
+
+<div class="term">
+<h3>Stat arb</h3>
+<p>Statistical arbitrage — short-term mean-reversion / cointegration trades, often on related instruments. The Renaissance Medallion fund is the canonical example. <a href="05_cointegration/explain.html">→ module 05</a></p>
+</div>
+
+<div class="term">
+<h3>Stop-loss</h3>
+<p>An order to exit a position if price moves against you by a threshold. Caps your downside per trade. <a href="14_risk_position_sizing/explain.html">→ module 14</a></p>
+</div>
+
+<h2 id="T">T</h2>
+
+<div class="term">
+<h3>Theta (Greek)</h3>
+<p>How much an option's value decays per day. Options lose value as expiry approaches (all else equal). <a href="07_options_greeks/explain.html">→ module 07</a></p>
+</div>
+
+<div class="term">
+<h3>Tick</h3>
+<p>The smallest price increment. If the asset moves in steps of $0.01, that's a tick. Tick size affects strategy (wider ticks = fewer fair signals, more profit per fill).</p>
+</div>
+
+<div class="term">
+<h3>Trend following</h3>
+<p>Bet the recent move continues. The opposite of mean reversion. <a href="09_trend_following/explain.html">→ module 09</a></p>
+</div>
+
+<h2 id="V">V</h2>
+
+<div class="term">
+<h3>Vega (Greek)</h3>
+<p>How much an option's price changes when implied volatility changes by 1 percentage point. Long vega = you want vol to rise. <a href="07_options_greeks/explain.html">→ module 07</a></p>
+</div>
+
+<div class="term">
+<h3>Volatility (σ)</h3>
+<p>How wildly the price moves. High σ = big jumps, scary. Low σ = calm. Drives option prices, market-making spreads, risk limits. <a href="10_volatility/explain.html">→ module 10</a></p>
+</div>
+
+<h2 id="W">W</h2>
+
+<div class="term">
+<h3>Wall-Mid</h3>
+<p>Timo Diehm's simpler market-making approach: post your bid at the level just inside the largest wall, your ask at the level just outside. Cheaper than Avellaneda–Stoikov, often beats it. <a href="03_market_making/extract.html">→ module 03 extract</a></p>
+</div>
+
+<div class="term">
+<h3>Working order</h3>
+<p>A limit order that's resting on the book and hasn't been filled or cancelled yet. Synonym for <i>limit order</i> in this context.</p>
+</div>
+
+<h2 id="Z">Z</h2>
+
+<div class="term">
+<h3>Z-score</h3>
+<p>How far the current value is from the average, measured in σ. Z = (x − mean) / std. Z = −2 means two standard deviations below the mean. Common entry threshold for mean reversion. <a href="04_mean_reversion/explain.html">→ module 04</a></p>
+</div>
+
+<footer style="margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--border); font-size: 13px; color: var(--muted);">
+<p>Update as we add terms. Alphabetized. <a href="00_README.html">Back to README</a>.</p>
+</footer>
+
+</div>
+</body>
+</html>

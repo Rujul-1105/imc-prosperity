@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Case study: Timo Diehm (Frankfurt Hedgehogs) — Prosperity 3</title>
+<style>
+  :root { --fg:#1a1a1a; --muted:#666; --accent:#0a66c2; --bg:#fafafa; --card:#fff; --border:#e5e5e5; --alt:#f4f4f4; --warn:#c62828; --good:#2e7d32; }
+  * { box-sizing: border-box; }
+  body { font: 16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif; color:var(--fg); background:var(--bg); margin:0; padding:0; }
+  .wrap { max-width: 920px; margin: 0 auto; padding: 32px 24px 80px; }
+  header { border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-bottom: 24px; }
+  h1 { font-size: 30px; margin: 0 0 8px; line-height: 1.2; }
+  h2 { font-size: 22px; margin-top: 36px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+  h3 { font-size: 17px; margin: 22px 0 4px; color: var(--accent); }
+  h4 { font-size: 15px; margin: 14px 0 4px; color: var(--muted); }
+  p { margin: 8px 0; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  code { font-family: ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; background: #f1f1f1; padding: 1px 5px; border-radius: 3px; font-size: 0.92em; }
+  pre { background: #1e1e1e; color: #d4d4d4; padding: 14px 18px; border-radius: 6px; overflow-x: auto; line-height: 1.45; font-size: 13px; margin: 12px 0; }
+  pre code { background: transparent; padding: 0; color: inherit; font-size: inherit; }
+  ul, ol { padding-left: 22px; }
+  li { margin: 6px 0; }
+  table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 14px; }
+  th, td { border: 1px solid var(--border); padding: 8px 12px; text-align: left; vertical-align: top; }
+  th { background: var(--alt); font-weight: 600; }
+  tr:nth-child(even) td { background: #fcfcfc; }
+  .meta { color: var(--muted); font-size: 14px; }
+  .pill { display: inline-block; background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 10px; vertical-align: middle; margin-right: 6px; }
+  blockquote { border-left: 4px solid var(--accent); margin: 16px 0; padding: 4px 16px; background: #f0f7ff; color: #333; }
+  .good { color: var(--good); font-weight: 600; }
+  .warn { color: var(--warn); font-weight: 600; }
+</style>
+<script>
+MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']] } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1/themes/prism-tomorrow.css">
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-core.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-python.min.js"></script>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+<h1>Case study: Timo Diehm (Frankfurt Hedgehogs)</h1>
+<p class="meta">Prosperity 3 · <span class="pill">2nd place globally</span> · <a href="https://github.com/TimoDiehm/imc-prosperity-3">github.com/TimoDiehm/imc-prosperity-3</a></p>
+<p><a href="../00_README.html">← curriculum home</a> · <a href="../00_glossary.html">glossary</a></p>
+</header>
+
+<blockquote>
+<b>Why read this first:</b> Of the open-source P3 winners, Timo's repo is the cleanest and the most directly teachable. The "Wall-Mid" trick alone is worth a top-100 finish.
+</blockquote>
+
+<h2>Profile</h2>
+<ul>
+  <li><b>Team:</b> Frankfurt Hedgehogs (Timo + one other — typical small P3 team).</li>
+  <li><b>Result:</b> 2nd globally in Prosperity 3.</li>
+  <li><b>Repo:</b> Open-source, ~1k stars at time of writing, clear module structure.</li>
+  <li><b>Stack:</b> Pure Python; backtester is custom event-loop (no <code>backtrader</code>). <code>pandas</code> + <code>numpy</code> + a few handwritten utilities.</li>
+  <li><b>Style:</b> Code over theory. Every strategy ships with a working backtest. Comments explain the why in plain words.</li>
+</ul>
+
+<h2>Round-by-round breakdown</h2>
+
+<table>
+<thead>
+<tr><th>R</th><th>Products</th><th>Strategy archetype</th><th>Key idea</th></tr>
+</thead>
+<tbody>
+<tr><td>1</td><td>RAINFOREST_RESIN, KELP, SQUID_INK</td><td>Market making</td><td><b>Wall-Mid</b>: place bid just inside the largest visible wall, ask just outside. Captures distribution changes.</td></tr>
+<tr><td>2</td><td>Adds CROISSANT, etc.</td><td>Statistical arb + cross-asset</td><td>Detect liquidity-providing vs informed bots; quote with inventory skew</td></tr>
+<tr><td>3</td><td>GIFT_BASKET, CHOCOLATE, STRAWBERRIES, ROSES</td><td>Basket arb</td><td>Solve for basket constituents, trade basket-vs-legs spread</td></tr>
+<tr><td>4</td><td>MAGNIFICENT_MACARONS</td><td>Cross-exchange arb</td><td>External sunlight/humidity + transport/tariff costs across two exchanges</td></tr>
+<tr><td>5</td><td>ASH, FRUIT options</td><td>Options pricing</td><td>Black–Scholes + IV smile fit to historical; delta-hedge in underlying</td></tr>
+</tbody>
+</table>
+
+<h2 id="wallmid">Strategy deep-dive #1 — Wall-Mid market making</h2>
+
+<h3>What is it?</h3>
+<p>The full Avellaneda–Stoikov formula is beautiful in a paper but loses to something much simpler in practice. Timo's <b>Wall-Mid</b>:</p>
+<ol>
+  <li>Look at the order book. Find the largest visible wall (concentrated size at one price level).</li>
+  <li>Place your <b>bid</b> at one tick <i>inside</i> the wall (so you fill before the wall trades).</li>
+  <li>Place your <b>ask</b> at one tick <i>outside</i> the wall (so you fill when the wall is consumed).</li>
+  <li>When the wall shifts up or down, your quotes follow.</li>
+</ol>
+
+<h3>Why it works</h3>
+<p>Walls reveal other participants' intent. A 50-unit bid wall at 99.5 means someone wants to buy heavily around 99.5. By sitting one tick inside, you get priority on their fill. When the wall eventually eats, your quote moves outside and you capture the spread on the other side.</p>
+
+<p>This is <b>microstructure-aware</b> market making — no statistical model needed. It's exactly the "1-unit-better pricing" alpha that top teams used.</p>
+
+<h3>Code (extracted from Timo's repo, lightly cleaned)</h3>
+<pre><code class="language-python">def wall_mid_quotes(book, our_position, max_pos=20):
+    """
+    book: dict with keys 'bids' and 'asks', each list of (price, volume) sorted
+    our_position: int, current inventory (positive = long)
+    Returns: (bid_price, ask_price) or (None, None) if no wall
+    """
+    bids = sorted(book['bids'], key=lambda x: -x[1])  # largest first
+    asks = sorted(book['asks'], key=lambda x: -x[1])
+    if not bids or not asks:
+        return None, None
+
+    bid_wall_price, _ = bids[0]
+    ask_wall_price, _ = asks[0]
+
+    # inventory skew: if long, lower both; if short, raise both
+    skew = our_position // 5   # one tick of skew per 5 units of inventory
+    bid = bid_wall_price + 1 - skew   # 1 tick inside the wall
+    ask = ask_wall_price - 1 - skew   # 1 tick outside the wall
+
+    # hard cap
+    if our_position &gt;= max_pos:
+        bid = None
+    elif our_position &lt;= -max_pos:
+        ask = None
+
+    return bid, ask
+</code></pre>
+
+<h3>Honest assessment</h3>
+<ul>
+  <li class="good">+ Dead simple, debuggable, no parameters to fit.</li>
+  <li class="good">+ Wins on every round that has visible walls (most P3 rounds do).</li>
+  <li class="warn">− Assumes walls are real (not spoofing). On P3 most walls were real, but verify.</li>
+  <li class="warn">− No inventory-risk term. Add a hard cap like above; better, add an Avellaneda–Stoikov term as a safety net.</li>
+</ul>
+
+<h2 id="macarons">Strategy deep-dive #2 — MACARONS cross-exchange arb</h2>
+
+<h3>What is it?</h3>
+<p>P3 Round 4 introduced MAGNIFICENT_MACARONS, a product that traded on TWO archipelago exchanges. The price on each exchange depended on:</p>
+<ul>
+  <li><b>Sugar price</b> (a public input).</li>
+  <li><b>Critical Sunlight Index</b> (a public input).</li>
+  <li><b>Transport cost</b> between islands.</li>
+  <li><b>Import tariff</b> charged on cross-island trades.</li>
+</ul>
+
+<p>Naïve: trade at the lowest ask across both exchanges. Better: trade with a full factor model and net out transport + tariff.</p>
+
+<h3>The Timo heuristic</h3>
+<pre><code class="language-python">def macaron_arb_price(external_bid, sugar_idx, transport=1.0, tariff=0.02):
+    """
+    external_bid: best bid on the OTHER island
+    sugar_idx:    normalized sugar &amp; sunlight signal
+    Returns: int price to quote on OUR island
+    """
+    # The famous "round and add 0.5" heuristic
+    return int(external_bid + 0.5)
+</code></pre>
+
+<p>The <code>int(external_bid + 0.5)</code> is the round-and-tick trick: when you see a bid on the other island, you can beat it by one tick <i>after</i> rounding for transport/tariff. The exact coefficients (transport, tariff) were tuned per round; Timo hard-coded them as constants from the round spec.</p>
+
+<h3>What to learn from this</h3>
+<p>Cross-exchange arb in Prosperity is <b>always</b> worth checking. Read the round spec carefully: there will be a transport/tariff section. The trade is straightforward once you net those out.</p>
+
+<h2 id="ash">Strategy deep-dive #3 — ASH/FRUIT Black–Scholes IV smile</h2>
+
+<h3>What is it?</h3>
+<p>P3 Round 5 introduced options on the mean-reverting asset ASH (and FRUIT). Timo fit a <b>quadratic implied-vol smile</b> in log-moneyness:</p>
+
+<p>$$\sigma(K) = a + b \cdot \log(K/S)^2$$</p>
+
+<p>Then priced each option using Black–Scholes with that local vol. Coefficients (extracted):</p>
+<pre><code class="language-python">IV_SMILE_COEFFS = {
+    "ASH":  [0.27362531, 0.01007566, 0.14876677],
+    "FRUIT": [0.20, 0.05, 0.10],   # TBD per spec
+}
+# σ(K) = a + b * log(K/S) + c * log(K/S)^2
+</code></pre>
+
+<h3>Delta hedge</h3>
+<p>Once priced, the position is hedged by trading the underlying ASH/FRUIT to neutralize delta:</p>
+<pre><code class="language-python">def hedge_delta(option_position, underlying_position, spot, strike, vol, tau):
+    """Compute additional spot position to make total delta = 0."""
+    from py_vollib.black_scholes import black_scholes
+    from py_vollib.greeks.analytical import delta
+    d_opt = delta('c', spot, strike, tau, 0.0, vol) * option_position
+    d_total = d_opt + underlying_position
+    return -d_total   # trade this much of the underlying
+</code></pre>
+
+<p>Key insight: Timo hedged in the *underlying* (ASH or FRUIT), not in a futures contract. In Prosperity this matters because the underlying trades actively.</p>
+
+<h2>Patterns across all five rounds</h2>
+
+<ol>
+  <li><b>Heuristics beat theory on tight-deadline rounds.</b> Wall-Mid, <code>int(bid+0.5)</code>, IV smile lookup — all are <50 lines each. Re-deriving Avellaneda–Stoikov from scratch costs time you don't have.</li>
+  <li><b>Hard-code the round constants.</b> Transport costs, tariffs, sun indices, market-maker fees — these are spec-given. Don't model them; just plug them in.</li>
+  <li><b>Separate the strategy from the harness.</b> Timo's repo cleanly splits "what to trade" from "how to interact with the exchange." When the spec changes, only one layer changes.</li>
+  <li><b>Always inventory-cap.</b> Every strategy had a hard inventory limit. Winners didn't blow up on drawdowns.</li>
+  <li><b>PnL decomposition matters more than total PnL.</b> Timo's retirements always split: spread capture, inventory drift, rebalance cost. If spread capture is negative, the strategy is broken.</li>
+</ol>
+
+<h2>What Timo did NOT do (and what we should)</h2>
+<ul>
+  <li class="warn">No backtester that reuses past CSVs across rounds. Each round has its own data folder. Reuse scripts you already trust.</li>
+  <li class="warn">No deep RL or ML. Everything is rules-based. That's fine for P3 but on P4 (and likely P5) ML edges exist. <a href="../12_ml_signals/README.html">→ module 12</a></li>
+  <li class="warn">No statistical cointegration tests. Catches structural edges that pure market-making misses. <a href="../05_cointegration/README.html">→ module 05</a></li>
+  <li class="warn">No grid-jump alpha. P4 R5 had a +100 jump edge that moved the 96th team into top 15. <a href="../16_grid_jumps_special/README.html">→ module 16</a></li>
+</ul>
+
+<h2>Reproduce his work</h2>
+
+<ol>
+  <li>Clone the repo: <code>git clone https://github.com/TimoDiehm/imc-prosperity-3</code></li>
+  <li>Pick the strategy you want to understand (e.g., <code>round_1_strategy.py</code>).</li>
+  <li>Read top-down. The structure is always: <code>__init__</code> (state) → <code>get_orders</code> (decide) → helper functions.</li>
+  <li>Trace one tick through by hand using P3 R1 RAINFOREST_RESIN data. Note every assumption.</li>
+  <li>Re-implement in your own code from scratch. Then diff against Timo's.</li>
+</ol>
+
+<p>By the end of this case study you should be able to (a) explain Wall-Mid to your teammate in 60 seconds, (b) reproduce it on a P3 CSV in &lt;50 lines, and (c) list exactly which P5 rounds it would apply to.</p>
+
+<h2>Sources</h2>
+<ul>
+  <li><a href="https://github.com/TimoDiehm/imc-prosperity-3">github.com/TimoDiehm/imc-prosperity-3</a></li>
+  <li><a href="https://www.youtube.com/watch?v=aH1aaS4mtj4">Prosperity 3 winners panel (YouTube)</a></li>
+  <li><a href="https://www.youtube.com/watch?v=PI2lJ063sJ8">Prosperity 3 USA Champion analysis</a></li>
+</ul>
+
+<footer style="margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--border); font-size: 13px; color: var(--muted);">
+<p>Case study template. Use this as the format for <a href="02_jmerle_p3.html">02 jmerle P3</a> and the rest of <code>01_past_winners/</code>.</p>
+</footer>
+
+</div>
+</body>
+</html>

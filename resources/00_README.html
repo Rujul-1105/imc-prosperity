@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IMC Prosperity 5 — Finance Curriculum (Rank #1 Track)</title>
+<style>
+  :root { --fg:#1a1a1a; --muted:#666; --accent:#0a66c2; --bg:#fafafa; --card:#fff; --border:#e5e5e5; }
+  * { box-sizing: border-box; }
+  body { font: 16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif; color:var(--fg); background:var(--bg); margin:0; padding:0; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 32px 24px 80px; }
+  header { border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-bottom: 24px; }
+  h1 { font-size: 32px; margin: 0 0 8px; line-height: 1.2; }
+  h2 { font-size: 24px; margin-top: 36px; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+  h3 { font-size: 19px; margin-top: 28px; }
+  h4 { font-size: 16px; margin-top: 20px; color: var(--muted); }
+  p { margin: 12px 0; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  code, pre { font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace; }
+  code { background: #f1f1f1; padding: 1px 5px; border-radius: 3px; font-size: 0.92em; }
+  pre { background: #1e1e1e; color: #d4d4d4; padding: 14px 18px; border-radius: 6px; overflow-x: auto; line-height: 1.45; font-size: 13px; }
+  pre code { background: transparent; padding: 0; color: inherit; font-size: inherit; }
+  ul, ol { padding-left: 22px; }
+  li { margin: 6px 0; }
+  table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 14px; }
+  th, td { border: 1px solid var(--border); padding: 8px 12px; text-align: left; }
+  th { background: #f4f4f4; font-weight: 600; }
+  blockquote { border-left: 4px solid var(--accent); margin: 16px 0; padding: 4px 16px; background: #f0f7ff; color: #333; }
+  .badge { display: inline-block; background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 10px; vertical-align: middle; margin-right: 6px; }
+  .badge.adv { background: #6f42c1; }
+  .meta { color: var(--muted); font-size: 14px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; margin: 16px 0; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 14px 16px; }
+  .card h4 { margin: 0 0 4px; color: var(--fg); }
+  .card p { margin: 4px 0 0; font-size: 13px; color: var(--muted); }
+  .nav { background: #fff; border: 1px solid var(--border); border-radius: 6px; padding: 12px 16px; margin: 24px 0; }
+  .nav strong { display: block; margin-bottom: 6px; }
+  .nav ol { margin: 4px 0; padding-left: 20px; font-size: 14px; }
+</style>
+<script>
+MathJax = {
+  tex: { inlineMath: [['$','$'], ['\\(','\\)']] }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1/themes/prism-tomorrow.css">
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-core.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-python.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+<h1>IMC Prosperity 5 — Finance Curriculum</h1>
+<p class="meta">Rank #1 Track · 16-week core + 4-week advanced · 2-person team · beginner-to-winning</p>
+<p>This folder is your self-study program. Every module explains a concept, points to the canonical source, then extracts the parts you actually need into your own words. The goal: beat global rank #1, or at minimum understand every trick the top teams used.</p>
+</header>
+
+<nav class="nav">
+<strong>You are here:</strong>
+<ol>
+  <li><a href="00_README.html"><b>00_README</b></a> — this page</li>
+  <li><a href="00_glossary.html">00_glossary</a> — every term defined</li>
+  <li><a href="weekly_plan.html">weekly_plan</a> — 16-week grid</li>
+  <li><a href="01_past_winners/01_timo_diehm_p3.html">01_past_winners/01_timo_diehm_p3</a> — first case study</li>
+</ol>
+</nav>
+
+<h2>How this curriculum works</h2>
+
+<p>Every module ships five files following one strict pattern:</p>
+<ol>
+  <li><b>README.html</b> — 1-page summary: what, why, where it shows in Prosperity.</li>
+  <li><b>explain.html</b> — plain-English explanation. No math, no jargon, no citations. Imagine explaining to a smart friend who's never taken a finance class.</li>
+  <li><b>source.html</b> — points to ONE canonical book/paper (chapter, page, link) plus 1–2 supplements. We don't reinvent wheels — we extract from the best.</li>
+  <li><b>extract.html</b> — formulas re-derived, code re-implemented, key diagrams re-described in <i>our</i> words. The file you actually do the math from.</li>
+  <li><b>exercises.html</b> — 3–5 Python exercises, each one replicating a known winning pattern from P3/P4. Done by running the scripts in <code>code/</code>.</li>
+</ol>
+
+<blockquote>
+<b>The optimal learning loop:</b> Read <code>explain.html</code> until you can describe the concept in plain words. Glance at <code>source.html</code> to know where it comes from. Use <code>extract.html</code> to actually do the math or write the code. Run the exercises in <code>code/</code>. Repeat weekly.
+</blockquote>
+
+<h2>Prerequisites</h2>
+
+<p>Before week 1 you should be comfortable with:</p>
+<ul>
+  <li><b>Python</b>: lists, dicts, classes, NumPy arrays, pandas DataFrames. If shaky, do <a href="https://numpy.org/learn/">NumPy's quickstart</a> and a Kaggle pandas micro-course.</li>
+  <li><b>Linear algebra</b>: vectors, matrices, dot products. MIT 18.06 lectures 1–10 cover everything you need.</li>
+  <li><b>Probability</b>: random variables, expectation, variance, normal distribution, conditional probability. MIT 6.041 lectures 1–8.</li>
+  <li><b>Calculus</b>: derivatives, partial derivatives, gradients. Most market-making math uses nothing beyond ∂.</li>
+</ul>
+<p>If you want a single book: <i>Heard on the Street</i> by Leo Boukamp (quant interview puzzles, builds intuition for the kind of thinking Prosperity tests). Not required, but useful.</p>
+
+<h2>The 20 modules</h2>
+
+<p>Each card links to the module's README. Start at 02 if 01 is for reference.</p>
+<div class="grid">
+  <a class="card" href="01_past_winners/01_timo_diehm_p3.html"><h4><span class="badge">01</span>Past winners</h4><p>Decoded strategies from top teams. Read before any module.</p></a>
+  <a class="card" href="02_microstructure/README.html"><h4><span class="badge">02</span>Microstructure</h4><p>Order book mechanics, bid/ask, mid, spread, queue priority.</p></a>
+  <a class="card" href="03_market_making/README.html"><h4><span class="badge">03</span>Market making</h4><p>Avellaneda–Stoikov, Timo's Wall-Mid. Used on AMETHYSTS-style rounds.</p></a>
+  <a class="card" href="04_mean_reversion/README.html"><h4><span class="badge">04</span>Mean reversion</h4><p>AR(1), Ornstein–Uhlenbeck, half-life, z-score. STARFRUIT/ASH rounds.</p></a>
+  <a class="card" href="05_cointegration/README.html"><h4><span class="badge">05</span>Cointegration</h4><p>Engle–Granger, Johansen, spreads. Pairs and basket legs.</p></a>
+  <a class="card" href="06_etf_basket_arb/README.html"><h4><span class="badge">06</span>ETF / basket arb</h4><p>NAV = weighted constituents; structural arb. GIFT_BASKET, PEBBLE rounds.</p></a>
+  <a class="card" href="07_options_greeks/README.html"><h4><span class="badge">07</span>Options & Greeks</h4><p>Black–Scholes, delta/gamma/vega, IV smile. ASH options rounds.</p></a>
+  <a class="card" href="08_cross_exchange_arb/README.html"><h4><span class="badge">08</span>Cross-exchange arb</h4><p>Factor model + transport/tariff. ORCHIDS / MACARONS rounds.</p></a>
+  <a class="card" href="09_trend_following/README.html"><h4><span class="badge">09</span>Trend following</h4><p>Linear extrapolation, two-stage entry. ROOT-style rounds.</p></a>
+  <a class="card" href="10_volatility/README.html"><h4><span class="badge">10</span>Volatility</h4><p>GARCH, realized vol, vol clustering.</p></a>
+  <a class="card" href="11_bayesian_signals/README.html"><h4><span class="badge">11</span>Bayesian signals</h4><p>Belief updating under uncertainty. Posterior fair value.</p></a>
+  <a class="card" href="12_ml_signals/README.html"><h4><span class="badge">12</span>ML signals</h4><p>Gradient boosting, feature engineering. AFML Ch 1–7.</p></a>
+  <a class="card" href="13_game_theory_bots/README.html"><h4><span class="badge">13</span>Game theory / bots</h4><p>Fingerprint adversarial bots, mirror their trades.</p></a>
+  <a class="card" href="14_risk_position_sizing/README.html"><h4><span class="badge">14</span>Risk & sizing</h4><p>Position limits, Kelly, drawdown stops.</p></a>
+  <a class="card" href="15_python_toolkit/README.html"><h4><span class="badge">15</span>Python toolkit</h4><p>NumPy / pandas / statsmodels / py_vollib / arch.</p></a>
+  <a class="card" href="16_grid_jumps_special/README.html"><h4><span class="badge">16</span>Grid jumps</h4><p>±100 jump edges on coarse grids. P4 R5 alpha.</p></a>
+  <a class="card" href="17_microstructure_advanced/README.html"><h4><span class="badge adv">17</span>Microstructure advanced</h4><p>Queue priority, latency, adverse selection (wks 17–20).</p></a>
+  <a class="card" href="18_stochastic_control/README.html"><h4><span class="badge adv">18</span>Stochastic control</h4><p>HJB / deep Avellaneda–Stoikov variants (wks 17–20).</p></a>
+  <a class="card" href="19_manual_rounds/README.html"><h4><span class="badge">19</span>Manual rounds</h4><p>Math puzzles, game theory, optimization. 25% of total score.</p></a>
+  <a class="card" href="20_mock_competition/README.html"><h4><span class="badge">20</span>Mock competition</h4><p>End-to-end dry run on P3/P4 data, PnL decomposition.</p></a>
+</div>
+
+<h2>File format</h2>
+
+<p>Every note is a <b>standalone HTML file</b>. They open in any browser, render with inline CSS, and pull only two CDN scripts:</p>
+<ul>
+  <li><b>MathJax 3</b> for equations (delivered from jsdelivr).</li>
+  <li><b>Prism.js</b> for code-block syntax highlighting.</li>
+</ul>
+<p>HTML is lighter than PDF for our use case (plain text, formulas, snippets) and easier to edit. We never embed binary blobs. Each file is self-contained except for the two CDNs above.</p>
+
+<h2>How to use this folder</h2>
+
+<ol>
+  <li><b>Week 1:</b> read <a href="00_glossary.html">the glossary</a> and skim the <a href="01_past_winners/01_timo_diehm_p3.html">first case study</a>. Spend 4 hours setting up Python (venv, install numpy/pandas/statsmodels/scikit-learn).</li>
+  <li><b>Every week:</b> open <a href="weekly_plan.html">weekly_plan.html</a> for that week's reading and deliverable. Work the module's <code>explain → source → extract → exercises</code> loop. Commit each finished module to git.</li>
+  <li><b>When Prosperity drops:</b> stop the curriculum. Move to <code>code/</code>. The visualizer and backtester (built separately) plug into this folder's <code>code/</code> directories in each module.</li>
+</ol>
+
+<h2>What this folder is NOT</h2>
+<ul>
+  <li>Not a backtester. Exercises use pure-Python toy loops.</li>
+  <li>Not a visualizer. Build that separately when ready.</li>
+  <li>Not a submission template. <code>code/</code> for that arrives with the competition.</li>
+  <li>Not interview prep. Add a separate <code>21_interview_prep/</code> if you want Jane Street puzzles / Citadel questions / Optiver challenges.</li>
+</ul>
+
+<h2>Sources we extracted from</h2>
+<p>These books/papers/repos form the spine of the curriculum. Every <code>source.html</code> in each module points to a specific chapter or commit.</p>
+<ul>
+  <li>Larry Harris, <i>Trading and Exchanges: Market Microstructure for Practitioners</i> (2003) — chapters 1–22, primary micro reference.</li>
+  <li>Ernie Chan, <i>Algorithmic Trading</i> (2013) — Ch 4–8 for mean reversion, cointegration.</li>
+  <li>John Hull, <i>Options, Futures, and Other Derivatives</i> (10th ed) — Ch 12–17 for options pricing.</li>
+  <li>Marcos López de Prado, <i>Advances in Financial Machine Learning</i> (2018) — Ch 1–7 for ML signals.</li>
+  <li>Avellaneda &amp; Stoikov (2008), "High-frequency trading in a limit order book" — arXiv:1708.04928.</li>
+  <li>BIS, "Anatomy of ETF Arbitrage" (Working Paper, 2021).</li>
+  <li>Timo Diehm's <a href="https://github.com/TimoDiehm/imc-prosperity-3">imc-prosperity-3</a> repo (2nd place P3, Frankfurt Hedgehogs).</li>
+  <li>Jmerle's <a href="https://github.com/jmerle/imc-prosperity-3">imc-prosperity-3</a> repo (25th P3, hybrid framework).</li>
+  <li>Leo Hawking's <a href="https://github.com/Leo-Hawking/IMC-Prosperity-4-Review">P4 retrospective</a> (96th, post-mortem).</li>
+</ul>
+
+<footer style="margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--border); font-size: 13px; color: var(--muted);">
+<p>Built for the Prosperity 5 cycle. Update weekly. Own it.</p>
+</footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weekly Plan — IMC Prosperity Curriculum</title>
+<style>
+  :root { --fg:#1a1a1a; --muted:#666; --accent:#0a66c2; --bg:#fafafa; --card:#fff; --border:#e5e5e5; --alt:#f4f4f4; }
+  * { box-sizing: border-box; }
+  body { font: 16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif; color:var(--fg); background:var(--bg); margin:0; padding:0; }
+  .wrap { max-width: 920px; margin: 0 auto; padding: 32px 24px 80px; }
+  header { border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-bottom: 24px; }
+  h1 { font-size: 30px; margin: 0 0 8px; line-height: 1.2; }
+  h2 { font-size: 22px; margin-top: 36px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+  h3 { font-size: 17px; margin: 22px 0 4px; color: var(--accent); }
+  p { margin: 6px 0 10px; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  code, pre { font-family: ui-monospace, SFMono-Regular,Menlo,Consolas,monospace; }
+  code { background: #f1f1f1; padding: 1px 5px; border-radius: 3px; font-size: 0.92em; }
+  ul, ol { padding-left: 22px; }
+  li { margin: 6px 0; }
+  table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 14px; }
+  th, td { border: 1px solid var(--border); padding: 8px 12px; text-align: left; vertical-align: top; }
+  th { background: var(--alt); font-weight: 600; }
+  tr:nth-child(even) td { background: #fcfcfc; }
+  tr.week8 td { background: #fff8e1; }
+  tr.weekend td { background: #e8f5e9; }
+  tr.advanced td { background: #f3e5f5; }
+  .meta { color: var(--muted); font-size: 14px; }
+  .legend { font-size: 13px; margin: 16px 0; }
+  .legend span { display: inline-block; padding: 2px 8px; margin-right: 6px; border-radius: 3px; }
+  .legend .r { background: #fff8e1; border: 1px solid #f0c36d; }
+  .legend .e { background: #e8f5e9; border: 1px solid #66bb6a; }
+  .legend .a { background: #f3e5f5; border: 1px solid #ab47bc; }
+  blockquote { border-left: 4px solid var(--accent); margin: 16px 0; padding: 4px 16px; background: #f0f7ff; color: #333; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+<h1>Weekly Plan</h1>
+<p class="meta">16 weeks core + 4 advanced · both of you work most modules, some weekly for parallel pairs.</p>
+<p><a href="00_README.html">← back to README</a> · <a href="00_glossary.html">glossary</a></p>
+</header>
+
+<blockquote>
+<b>Reading time budget:</b> ~6–8 hours reading, ~6–8 hours coding per week per person. Heavy weeks (5, 9, 11) push 12+ hours. Plan rest days — burnout is the #1 risk in 16-week prep.
+</blockquote>
+
+<div class="legend">
+  <span class="r">Review / consolidation week</span>
+  <span class="e">Mock round or exercise-heavy</span>
+  <span class="a">Advanced (only after week 16)</span>
+</div>
+
+<h2>How to split between two people</h2>
+<p>Most weeks are <b>parallel</b> — both of you read the same material and pair-program the exercises. A few weeks suggest a <b>split</b>:</p>
+<ul>
+  <li><b>Week 6</b> (cointegration): Person A reads Engle–Granger; Person B reads Johansen. Reconcile Thursday.</li>
+  <li><b>Week 9</b> (options): Person A owns Black–Scholes derivation + delta hedging; Person B owns IV smile + vol surface. Reconcile Saturday.</li>
+  <li><b>Week 11</b> (ML + vol): Person A owns López de Prado Ch 1–7 (XGBoost pipeline); Person B owns GARCH/EGARCH via <code>arch</code> package. Reconcile Sunday.</li>
+  <li><b>Week 16</b> (mock round): split products. Each person writes their trader's strategy solo, then merge.</li>
+</ul>
+
+<h2>The 16-week grid</h2>
+
+<table>
+<thead>
+<tr><th style="width:60px">Wk</th><th>Module(s)</th><th>Reading</th><th>Deliverable (commit by Sunday)</th><th>2-person split</th></tr>
+</thead>
+<tbody>
+<tr><td>1</td><td>00 + <a href="15_python_toolkit/README.html">15</a></td><td>Harris Ch 1–3; <a href="https://numpy.org/learn/">NumPy quickstart</a>; pandas micro-course</td><td><a href="00_glossary.html">00_glossary.html</a> populated with personal-favorite definitions; venv set up; numpy/pandas exercises passing</td><td>parallel</td></tr>
+
+<tr><td>2</td><td><a href="02_microstructure/README.html">02</a></td><td>Harris Ch 4–7; BIS order-book microstructure paper</td><td>Toy order book class in <code>02_microstructure/code/</code> parses a past CSV</td><td>parallel</td></tr>
+
+<tr><td>3</td><td><a href="03_market_making/README.html">03</a></td><td>Avellaneda–Stoikov paper §2.1–2.3 (arXiv:1708.04928); Timo Diehm's <code>wall_mid.py</code></td><td>AS implementation from scratch, matching Timo's <code>wall_mid</code> on AMETHYSTS data</td><td>parallel</td></tr>
+
+<tr><td>4</td><td><a href="03_market_making/README.html">03</a></td><td>Timo's P3 R1 RAINFOREST_RESIN writeup; P4 RAINFOREST_RESIN CSVs</td><td>Replicate Timo's market-making on P4 data; compare AS vs wall_mid PnL</td><td>parallel</td></tr>
+
+<tr><td>5</td><td><a href="04_mean_reversion/README.html">04</a></td><td>Chan Ch 4; statsmodels AR(1) docs</td><td>AR(1) fit on STARFRUIT-like data; backtest z-score strategy with positive Sharpe</td><td>parallel</td></tr>
+
+<tr><td>6</td><td><a href="05_cointegration/README.html">05</a></td><td>Chan Ch 4–5; Engle–Granger 1987 paper; Johansen 1988</td><td>Cointegration test on basket legs (use P3 GIFT_BASKET data)</td><td><b>split</b></td></tr>
+
+<tr><td>7</td><td><a href="06_etf_basket_arb/README.html">06</a></td><td>BIS "Anatomy of ETF Arbitrage"; Timo P3 R3 GIFT_BASKET</td><td>Solve basket weights from CSV residuals; trade spread</td><td>parallel</td></tr>
+
+<tr class="week8"><td>8</td><td><a href="06_etf_basket_arb/README.html">06</a></td><td><b>Review week</b> — revisit any module where your backtest isn't yet positive-Sharpe</td><td>Re-run weeks 3–7 backtests with documentation; commit a single summary</td><td>parallel</td></tr>
+
+<tr><td>9</td><td><a href="07_options_greeks/README.html">07</a></td><td>Hull Ch 12–17; py_vollib tutorials</td><td>Price options, compute Greeks, delta-hedge a synthetic ASH options round</td><td><b>split</b></td></tr>
+
+<tr><td>10</td><td><a href="08_cross_exchange_arb/README.html">08</a></td><td>ORCHIDS / MACARONS factor-model writeups</td><td>Build ORCHIDS-like factor model from synthetic; simulate two exchanges</td><td>parallel</td></tr>
+
+<tr><td>11</td><td><a href="12_ml_signals/README.html">12</a> + <a href="10_volatility/README.html">10</a></td><td>López de Prado AFML Ch 1–7; GARCH via <code>arch</code></td><td>XGBoost signal on a past round; GARCH vol forecast on residuals</td><td><b>split</b></td></tr>
+
+<tr><td>12</td><td><a href="13_game_theory_bots/README.html">13</a> + <a href="14_risk_position_sizing/README.html">14</a></td><td>Bot fingerprinting (Mark14/55 from P3); Vince "Kelly"</td><td>Bot classifier on past trades; Kelly sizing script with drawdown stops</td><td>parallel</td></tr>
+
+<tr><td>13</td><td><a href="16_grid_jumps_special/README.html">16</a></td><td>P4 R5 grid-jump writeups</td><td>Trade ±100 jumps on synthetic GBM-on-grid; positive expected PnL</td><td>parallel</td></tr>
+
+<tr><td>14</td><td><a href="11_bayesian_signals/README.html">11</a></td><td>Downey's <i>Think Bayes</i> Ch 1–6</td><td>Bayesian fair-value estimator with conjugate priors</td><td>parallel</td></tr>
+
+<tr class="weekend"><td>15</td><td><a href="19_manual_rounds/README.html">19</a></td><td><b>Manual round prep:</b> collect P3/P4 manual challenges; solve 5</td><td>5 solved manual challenges documented in <code>19_manual_rounds/past_puzzles/</code></td><td>parallel</td></tr>
+
+<tr class="weekend"><td>16</td><td><a href="20_mock_competition/README.html">20</a></td><td><b>Mock competition</b> — full round on P3/P4 data; PnL decomposition</td><td>Runbook + PnL split into spread / inventory / rebalance contributions</td><td><b>split</b></td></tr>
+
+<tr class="advanced"><td>17</td><td><a href="17_microstructure_advanced/README.html">17</a></td><td>Harris Ch 12–14 (advanced microstructure); queue priority</td><td>Pro-rata vs price-time priority simulator</td><td>optional</td></tr>
+
+<tr class="advanced"><td>18</td><td><a href="18_stochastic_control/README.html">18</a></td><td>HJB derivation; Cartea–Jaimungal–Penã "Algorithmic Trading"</td><td>Stochastic-control market-making variant on synthetic data</td><td>optional</td></tr>
+
+<tr class="advanced"><td>19</td><td><a href="17_microstructure_advanced/README.html">17</a></td><td>Adverse selection deep-dive (Glosten–Milgrom)</td><td>Glosten–Milgrom model fit to L3 trade prints</td><td>optional</td></tr>
+
+<tr class="advanced"><td>20</td><td>integration</td><td>Re-run mock round with everything; PnL attribution chart</td><td>Final presentation-quality backtest</td><td>optional</td></tr>
+
+</tbody>
+</table>
+
+<h2>What "deliverable" means</h2>
+<p>Every week ends with a <b>commit</b> to git. Each deliverable is one of:</p>
+<ol>
+  <li>A finished module folder (<code>XX_module/explain.html</code> + <code>source.html</code> + <code>extract.html</code> + <code>exercises.html</code> + runnable <code>code/</code>).</li>
+  <li>A backtest result with PnL broken down (spread / inventory / rebalance).</li>
+  <li>A solved manual challenge write-up.</li>
+  <li>A 1-page retrospective on the week's failures (also commit it).</li>
+</ol>
+<p>You are graded by your ability to <b>replicate a past winning pattern</b>, not by reading speed.</p>
+
+<h2>Past P3/P4 datasets</h2>
+<p>You already have P3/P4 round CSVs in the sibling folder <code>../prosperity-4/data_capsule/ROUND_1/</code> etc. Use these for exercises. The P3 datasets are mirrored in <a href="https://github.com/jmerle/imc-prosperity-3/tree/master/data">jmerle's repo</a> if you want a fresh copy.</p>
+
+<h2>Reading list (single combined view)</h2>
+<ul>
+  <li>Larry Harris, <i>Trading and Exchanges</i> — Ch 1–3, 4–7, 12–14.</li>
+  <li>Avellaneda &amp; Stoikov (2008), <i>High-frequency trading in a limit order book</i>, arXiv:1708.04928.</li>
+  <li>Ernie Chan, <i>Algorithmic Trading</i> — Ch 4, 5.</li>
+  <li>Engle &amp; Granger (1987), "Co-integration and error correction."</li>
+  <li>Johansen (1988), "Statistical analysis of cointegration vectors."</li>
+  <li>John Hull, <i>Options, Futures, and Other Derivatives</i> — Ch 12–17.</li>
+  <li>López de Prado, <i>Advances in Financial Machine Learning</i> — Ch 1–7.</li>
+  <li>BIS Working Paper, "Anatomy of ETF Arbitrage."</li>
+  <li>Allen Downey, <i>Think Bayes</i> — Ch 1–6.</li>
+  <li>Cartea–Jaimungal–Penã, <i>Algorithmic Trading</i> — Ch 1, 2 (advanced only).</li>
+  <li>Ralph Vince, <i>The Mathematics of Money Management</i> — Ch 1, 2.</li>
+  <li>Timo Diehm, <a href="https://github.com/TimoDiehm/imc-prosperity-3">imc-prosperity-3</a> repo.</li>
+  <li>Jmerle, <a href="https://github.com/jmerle/imc-prosperity-3">imc-prosperity-3</a> repo.</li>
+</ul>
+
+<h2>When Prosperity drops</h2>
+<ol>
+  <li>Stop the curriculum. Don't keep grinding modules.</li>
+  <li>Move into <code>code/</code> (created at that point).</li>
+  <li>Plug the in-house visualizer/backtester (built separately) into the loop.</li>
+  <li>Per-round pattern: read the spec, identify which modules apply, pull the relevant <code>extract.html</code> + <code>code/</code> as starting code, iterate.</li>
+  <li>After each round, retro and update the relevant module's <code>extract.html</code> with what you learned.</li>
+</ol>
+
+<footer style="margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--border); font-size: 13px; color: var(--muted);">
+<p>Update weekly with what you actually finished vs. what you skipped. Honesty &gt; optimism.</p>
+</footer>
+
+</div>
+</body>
+</html>
