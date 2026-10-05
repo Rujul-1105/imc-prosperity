@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 03 — Market Making · explain</title>
+<style>
+  :root { --fg:#1a1a1a; --muted:#666; --accent:#0a66c2; --bg:#fafafa; --border:#e5e5e5; }
+  * { box-sizing: border-box; }
+  body { font: 16px/1.7 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif; color:var(--fg); background:var(--bg); margin:0; padding:0; }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 32px 24px 80px; }
+  header { border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-bottom: 24px; }
+  h1 { font-size: 30px; margin: 0 0 8px; }
+  h2 { font-size: 22px; margin-top: 32px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+  p { margin: 10px 0; }
+  a { color: var(--accent); text-decoration: none; }
+  code { background: #f1f1f1; padding: 1px 5px; border-radius: 3px; font-size: 0.95em; font-family: ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
+  pre { background: #1e1e1e; color: #d4d4d4; padding: 14px 18px; border-radius: 6px; overflow-x: auto; line-height: 1.45; font-size: 13px; }
+  blockquote { border-left: 4px solid var(--accent); margin: 16px 0; padding: 4px 16px; background: #f0f7ff; color: #333; }
+  .meta { color: var(--muted); font-size: 14px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+<h1>Market Making — the plain-English tour</h1>
+<p class="meta">Imagine explaining to a friend who's never traded. We will cover: what a market-maker is, how they make money, what the risks are, and what the famous formula does.</p>
+<p><a href="README.html">← module README</a> · <a href="source.html">source</a> · <a href="extract.html">extract</a> · <a href="exercises.html">exercises</a></p>
+</header>
+
+<h2>The story</h2>
+
+<p>Picture a used-car lot. The dealer sits between buyers and sellers. A buyer shows up wanting a specific model. The dealer says "I have one, $15,000." A seller shows up with the same model. The dealer says "I'll take it, $13,000." The dealer pockets the $2,000 difference.</p>
+
+<p>The dealer is a <b>market-maker</b>. The $2,000 is the <b>spread</b>. In a financial market, the same game plays out with stocks or futures or whatever the asset is. You post a <b>bid</b> (the price you'll pay) and an <b>ask</b> (the price you'll sell at). When someone hits your bid, you buy. When someone hits your ask, you sell. The difference is your gross profit.</p>
+
+<p>But — and this is the key — the dealer doesn't get to pick when a buyer or seller shows up. They might get stuck with cars they don't want, or run out of cars when buyers want them. They can also get picked off: a sophisticated buyer knows that particular model is suddenly worth $20,000 elsewhere, sells to the dealer at $13,000, and the dealer is left with a car worth less than they paid.</p>
+
+<p>The whole art of market-making is figuring out <b>what prices to post</b> so that the dealer's expected profit per day is positive, after accounting for getting picked off and being stuck with cars.</p>
+
+<h2>The naive approach</h2>
+
+<p>First instinct: post a tight bid and a tight ask, like bid=99 and ask=101 (spread of 2). When the market goes to 100.5, your bid is 99 (1.5 below) and your ask is 101 (0.5 above). The market has to come to you.</p>
+
+<p>But tight spread means low margin per trade. To make the same money as a wider-spread dealer, you need many more trades. Many more trades means many more chances to get picked off. The expected cost of adverse selection has to come out of your spread. If the spread is too tight, you lose money net.</p>
+
+<p>So the naive approach fails. You need to widen the spread.</p>
+
+<h2>What does the spread depend on?</h2>
+
+<p>Three things, mostly:</p>
+
+<ol>
+  <li><b>How volatile is the asset?</b> Volatile assets move around a lot, so your quotes get picked off more often. You need a wider spread to compensate.</li>
+  <li><b>How much do you already have?</b> If you're sitting on 100 units you wanted to sell, you need to lower both your bid and your ask to encourage people to buy from you. If you have zero, no skew.</li>
+  <li><b>How confident are you in your edge?</b> If the asset is bouncing around and you have no information advantage, you need a wider spread. If you can predict short-term moves, you can afford a tighter spread.</li>
+</ol>
+
+<p>The Avellaneda–Stoikov formula encodes these three concerns in a single equation. The Wall-Mid heuristic does it more simply, with no parameters, by reading the order book.</p>
+
+<h2>Adverse selection, in one paragraph</h2>
+
+<p>Imagine the dealer posts bid=99 and ask=101, and the asset is at 100. A trader comes in and sells to the dealer at 99. Why? Because that trader thinks 99 is too high — they think the asset is really worth 95. They've dumped a soon-to-be-worthless asset on the dealer. The dealer now has an asset that's about to drop to 95. The $2 spread revenue doesn't cover the $4 capital loss.</p>
+
+<p>The market-maker's whole job is to <b>avoid getting picked off by people with better information</b>. The spread is what you earn to compensate for this risk. The Avellaneda–Stoikov formula says "widen your spread in proportion to recent volatility, because high volatility is correlated with informed traders."</p>
+
+<h2>Inventory risk, in another paragraph</h2>
+
+<p>The dealer is sitting on 100 cars. They've been buying aggressively. Now they need to start selling. The next 50 trades should be sells, not buys. If they keep posting a tight bid, they keep buying. The inventory grows. The risk grows. Eventually they're sitting on so many cars that one bad day wipes them out.</p>
+
+<p>So the dealer needs to <b>skew their quotes</b>. When they're long, they post a lower bid (less attractive to sellers → they buy less) and a lower ask (more attractive to buyers → they sell more). The skew gradually drains the inventory back toward zero.</p>
+
+<p>The Avellaneda–Stoikov formula handles this automatically: the inventory term in the formula is the skew.</p>
+
+<h2>What does the Avellaneda–Stoikov formula actually do?</h2>
+
+<p>Inputs:</p>
+<ul>
+  <li>Current mid price (say 100).</li>
+  <li>Your current inventory (say +20, you're long 20).</li>
+  <li>Recent volatility (say 0.5 per tick, or however it's measured).</li>
+  <li>How risk-averse you are (one parameter, called γ).</li>
+  <li>How fast orders arrive at the touch (another parameter, called κ).</li>
+  <li>How much time is left in the trading day (T − t).</li>
+</ul>
+
+<p>Outputs:</p>
+<ul>
+  <li>A <b>reservation price</b>: the price at which you'd be indifferent between buying and not buying.</li>
+  <li>An <b>optimal half-spread</b>: the distance from reservation to your bid (and to your ask).</li>
+</ul>
+
+<p>Then you post:</p>
+<blockquote>
+bid = reservation − half_spread<br>
+ask = reservation + half_spread
+</blockquote>
+
+<p>That's it. The formula is just a recipe for the two prices.</p>
+
+<h2>What does Wall-Mid do?</h2>
+
+<p>Wall-Mid skips the math. It says: find the largest buy wall (a price level with a lot of volume waiting to buy) and the largest sell wall. Place your bid 1 tick inside the buy wall (so you fill before the wall does) and your ask 1 tick outside the sell wall (so you fill when the wall is consumed).</p>
+
+<p>It's pure microstructure. No parameters. It reads the book, not a model.</p>
+
+<p>Timo Diehm used this in P3 R1 and won 2nd place. Avellaneda–Stoikov is theoretically beautiful but loses to Wall-Mid on rounds with visible walls.</p>
+
+<h2>Which one should you use?</h2>
+
+<p>Rule of thumb:</p>
+
+<ul>
+  <li><b>AMETHYSTS / RAINFOREST_RESIN</b> (FFV): Wall-Mid wins. The price doesn't move; walls dominate.</li>
+  <li><b>GBM-style products</b> (SQUID_INK, generic): AS is competitive. The volatility term matters.</li>
+  <li><b>Mean-reverting</b> (STARFRUIT, ASH, FRUIT): AS is competitive; Wall-Mid also works but you can also use mean-reversion as a separate signal.</li>
+  <li><b>Thin books</b>: AS over-fits; Wall-Mid is too twitchy. You need a hybrid (Wall-Mid with AS-style inventory skew).</li>
+</ul>
+
+<p>In practice, the best market-makers in P3/P4 use a <b>hybrid</b>: Wall-Mid for the center of the quote, AS for the inventory skew. See exercise 4.</p>
+
+<h2>Pulling it together</h2>
+
+<p>Market-making is the bedrock of the curriculum. It's not the highest-PnL play, but it's the most consistent. Master it here, and you'll have a fallback for every Prosperity round. Move to <a href="extract.html">extract</a> to see the formulas and code in our notation.</p>
+
+<footer style="margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--border); font-size: 13px; color: var(--muted);">
+<p><a href="README.html">← module README</a></p>
+</footer>
+
+</div>
+</body>
+</html>

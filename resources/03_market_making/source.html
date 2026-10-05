@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 03 — Market Making · source</title>
+<style>
+  :root { --fg:#1a1a1a; --muted:#666; --accent:#0a66c2; --bg:#fafafa; --border:#e5e5e5; }
+  * { box-sizing: border-box; }
+  body { font: 16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif; color:var(--fg); background:var(--bg); margin:0; padding:0; }
+  .wrap { max-width: 820px; margin: 0 auto; padding: 32px 24px 80px; }
+  header { border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-bottom: 24px; }
+  h1 { font-size: 28px; margin: 0 0 8px; }
+  h2 { font-size: 20px; margin-top: 32px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+  p { margin: 8px 0; }
+  a { color: var(--accent); text-decoration: none; }
+  code { background: #f1f1f1; padding: 1px 5px; border-radius: 3px; font-size: 0.92em; font-family: ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
+  blockquote { border-left: 4px solid var(--accent); margin: 16px 0; padding: 4px 16px; background: #f0f7ff; color: #333; }
+  table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 14px; }
+  th, td { border: 1px solid var(--border); padding: 8px 12px; text-align: left; vertical-align: top; }
+  th { background: #f4f4f4; }
+  .main { background: #fff8e1; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+<h1>Module 03 — Sources</h1>
+<p class="meta">Two main sources: the Avellaneda–Stoikov paper (the math) and Timo's repo (the practice).</p>
+<p><a href="README.html">← module README</a></p>
+</header>
+
+<h2>Main source #1 — the math</h2>
+
+<table>
+<tr class="main">
+<td><b>Avellaneda &amp; Stoikov</b> (2008), "High-frequency trading in a limit order book," Quantitative Finance 8(3), 217-224. <a href="https://arxiv.org/abs/1708.04928">arXiv:1708.04928</a>.</td>
+</tr>
+</table>
+
+<p>The standard market-making paper. Read §2.1–2.3 carefully. Focus on equations (3) (reservation price) and (5) (optimal spread). Skip the rest on first read; revisit when you have specific questions.</p>
+
+<p>Where to get it:</p>
+<ul>
+  <li><a href="https://arxiv.org/abs/1708.04928">arXiv:1708.04928</a> — free PDF.</li>
+  <li>Published version behind a paywall, but the arXiv version is essentially identical.</li>
+</ul>
+
+<p>Reference code: <a href="https://github.com/astraflow/avellaneda-stoikov">astraflow/avellaneda-stoikov</a> on GitHub. C++ and Python. Faithful to the paper.</p>
+
+<h2>Main source #2 — the practice</h2>
+
+<table>
+<tr class="main">
+<td><b>Timo Diehm</b>, <a href="https://github.com/TimoDiehm/imc-prosperity-3">imc-prosperity-3</a>, 2nd place in P3.</td>
+</tr>
+</table>
+
+<p>The "Wall-Mid" strategy and the practical implementation of market-making. Read <code>round_1_strategy.py</code> in full. The functions are < 50 lines each.</p>
+
+<p>Use this repo as a starting point, not a finished strategy. The team should re-implement in your own code, parameterizing on round constants.</p>
+
+<h2>Supplement 1 — Cartea–Jaimungal–Penã</h2>
+
+<p><b>Álvaro Cartea, Sebastian Jaimungal, Jorge Penã</b>, <i>Algorithmic Trading</i> (Cambridge, 2015). Ch 1, 2.</p>
+
+<p>Mathematical treatment. Builds on Avellaneda–Stoikov with multiple assets, market impact, and risk-aversion variants. Use this for module 18 (advanced) — not for the first read.</p>
+
+<h2>Supplement 2 — Harris, chapter 6</h2>
+
+<p>Larry Harris, <i>Trading and Exchanges</i> (2003), Ch 6 — "Market Makers and Specialist Markets."</p>
+
+<p>Background on what market-makers do and how they're compensated. Less mathematical than AS, more institutional context.</p>
+
+<h2>What this module does NOT cover (and where to look)</h2>
+
+<ul>
+  <li><b>Multi-asset market-making</b> — module 18 (advanced).</li>
+  <li><b>Market-impact adjustment</b> — module 18.</li>
+  <li><b>Stochastic control / HJB derivation</b> — module 18.</li>
+  <li><b>Adverse-selection microprice adjustment</b> — module 17 (advanced microstructure).</li>
+  <li><b>Pro-rata vs FIFO exchanges</b> — module 17.</li>
+</ul>
+
+<h2>Reading time budget</h2>
+<ul>
+  <li>Avellaneda–Stoikov §2.1–2.3: 4 hours.</li>
+  <li>Timo's <code>round_1_strategy.py</code>: 2 hours.</li>
+  <li>Cartea–Jaimungal–Penã Ch 1: 4 hours (skim, don't read cover-to-cover).</li>
+  <li>Harris Ch 6: 1 hour.</li>
+  <li>Total: ~11 hours. Spread over 2 weeks.</li>
+</ul>
+
+<footer style="margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--border); font-size: 13px; color: var(--muted);">
+<p>Once you've read these, move to <a href="extract.html">extract.html</a> for the formulas and code.</p>
+</footer>
+
+</div>
+</body>
+</html>

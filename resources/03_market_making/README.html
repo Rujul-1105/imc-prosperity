@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 03 — Market Making · README</title>
+<style>
+  :root { --fg:#1a1a1a; --muted:#666; --accent:#0a66c2; --bg:#fafafa; --border:#e5e5e5; --alt:#f4f4f4; }
+  * { box-sizing: border-box; }
+  body { font: 16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif; color:var(--fg); background:var(--bg); margin:0; padding:0; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 32px 24px 80px; }
+  header { border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-bottom: 24px; }
+  h1 { font-size: 28px; margin: 0 0 8px; }
+  h2 { font-size: 20px; margin-top: 32px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+  p { margin: 8px 0; }
+  a { color: var(--accent); text-decoration: none; }
+  code { background: #f1f1f1; padding: 1px 5px; border-radius: 3px; font-size: 0.92em; font-family: ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
+  ul, ol { padding-left: 22px; }
+  li { margin: 5px 0; }
+  .meta { color: var(--muted); font-size: 14px; }
+  .file-list a { display: block; padding: 4px 0; }
+  blockquote { border-left: 4px solid var(--accent); margin: 16px 0; padding: 4px 16px; background: #f0f7ff; color: #333; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+<h1>Module 03 — Market Making</h1>
+<p class="meta">The simplest strategy archetype. Quote both sides, capture the spread, manage inventory.</p>
+<p><a href="../00_README.html">← curriculum home</a></p>
+</header>
+
+<blockquote>
+<b>What you'll know after this module:</b> The Avellaneda–Stoikov formula and what each parameter does. Timo's Wall-Mid shortcut and why it often beats AS. How to estimate the parameters from data. How to combine both with inventory caps. How to backtest a market-making strategy on a past round and decompose the PnL.
+</blockquote>
+
+<h2>Why this module comes second</h2>
+<p>Module 02 taught you the order book. This module teaches you the simplest strategy you can run on it: market making. The whole point of an order book is to provide a place for market-makers to post quotes. Once you can read a book and post quotes, you have a strategy that works on every Prosperity round that has any tradeable product.</p>
+
+<h2>Files in this module</h2>
+<div class="file-list">
+  <a href="explain.html">explain.html</a> — what market-making is, in plain English.
+  <a href="source.html">source.html</a> — Avellaneda–Stoikov paper, Timo's repo, supplementary reading.
+  <a href="extract.html">extract.html</a> — the AS formula in our notation, plus Wall-Mid code.
+  <a href="exercises.html">exercises.html</a> — 5 hands-on exercises on P3/P4 data.
+  <a href="code/market_maker.py">code/market_maker.py</a> — your reusable market-making class.
+  <a href="code/wall_mid.py">code/wall_mid.py</a> — Timo's Wall-Mid from scratch.
+  <a href="code/avellaneda_stoikov.py">code/avellaneda_stoikov.py</a> — the AS paper's formula, coded.
+  <a href="code/backtest_mm.py">code/backtest_mm.py</a> — a simple backtester for market-making PnL.
+</div>
+
+<h2>Where this shows up in Prosperity</h2>
+<ul>
+  <li><b>AMETHYSTS (FFV)</b> — the canonical market-making round. AS or Wall-Mid both work. The team should master this archetype first.</li>
+  <li><b>RAINFOREST_RESIN (P3/P4 R1)</b> — Timo's Wall-Mid won P3 R1 on this.</li>
+  <li><b>SQUID_INK (P3 R1)</b> — GBM-style. Tighter spreads required; higher inventory churn.</li>
+  <li><b>STARFRUIT, ASH, FRUIT</b> — market-making is the secondary play; primary is mean-reversion. But you still post quotes when prices are stable.</li>
+  <li><b>Every round</b> — even basket and options rounds reward a base market-making strategy on the underlying.</li>
+</ul>
+
+<h2>Time budget</h2>
+<p>2 weeks (week 3-4 of curriculum). 12-15 hours each.</p>
+
+<h2>Prerequisites</h2>
+<p>Module 02 (Microstructure). <a href="../00_glossary.html">Glossary</a> open in another tab. The code in <code>02_microstructure/code/order_book.py</code> is reused here.</p>
+
+<h2>Honest assessment</h2>
+<p>Market-making is <b>not</b> the highest-PnL strategy in most rounds. The higher-PnL plays are basket arb, options pricing, cross-exchange arb. But market-making is the <b>most consistent</b> — every round has tradeable product, and a working market-maker will not lose money in any of them. It is the strategy you fall back on when nothing else works. Master it first.</p>
+
+<p>Furthermore, the underlying insights — inventory risk, adverse selection, parameter estimation — are the foundation for every other strategy. Learn them here.</p>
+
+<footer style="margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--border); font-size: 13px; color: var(--muted);">
+<p>Once done, move to <a href="../04_mean_reversion/README.html">module 04 — Mean Reversion</a>.</p>
+</footer>
+
+</div>
+</body>
+</html>
