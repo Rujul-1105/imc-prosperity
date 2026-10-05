@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 04 — Mean Reversion · extract</title>
+<style>
+  :root { --fg:#1a1a1a; --muted:#666; --accent:#0a66c2; --bg:#fafafa; --border:#e5e5e5; }
+  * { box-sizing: border-box; }
+  body { font: 16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif; color:var(--fg); background:var(--bg); margin:0; padding:0; }
+  .wrap { max-width: 820px; margin: 0 auto; padding: 32px 24px 80px; }
+  header { border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-bottom: 24px; }
+  h1 { font-size: 28px; margin: 0 0 8px; }
+  h2 { font-size: 20px; margin-top: 32px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+  h3 { font-size: 16px; margin-top: 20px; color: var(--accent); }
+  p { margin: 8px 0; }
+  a { color: var(--accent); text-decoration: none; }
+  code { background: #f1f1f1; padding: 1px 5px; border-radius: 3px; font-size: 0.95em; font-family: ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
+  pre { background: #1e1e1e; color: #d4d4d4; padding: 14px 18px; border-radius: 6px; overflow-x: auto; line-height: 1.45; font-size: 13px; }
+  pre code { background: transparent; padding: 0; color: inherit; font-size: inherit; }
+  blockquote { border-left: 4px solid var(--accent); margin: 16px 0; padding: 4px 16px; background: #f0f7ff; color: #333; }
+  table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 14px; }
+  th, td { border: 1px solid var(--border); padding: 8px 12px; text-align: left; vertical-align: top; }
+  th { background: #f4f4f4; }
+</style>
+<script>MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']] } };</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1/themes/prism-tomorrow.css">
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-core.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-python.min.js"></script>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+<h1>Module 04 — Extract (formulas + code in our notation)</h1>
+<p class="meta">Re-derived from Chan Ch 4, Hamilton Ch 3, and statsmodels docs. Use this file to do the math.</p>
+<p><a href="README.html">← module README</a> · <a href="explain.html">explain</a> · <a href="source.html">source</a> · <a href="exercises.html">exercises</a></p>
+</header>
+
+<h2>AR(1) — the discrete-time model</h2>
+
+<p>The AR(1) model for a price series $p_t$:</p>
+
+<blockquote>
+$p_t = c + \beta \cdot p_{t-1} + \varepsilon_t$, &nbsp; $\varepsilon_t \sim \mathcal{N}(0, \sigma^2_\varepsilon)$
+</blockquote>
+
+<p>Mean reversion requires $0 &lt; \beta &lt; 1$. When $\beta = 0$, the price is white noise (no memory). When $\beta = 1$, the price is a random walk. When $\beta &gt; 1$, the price is explosive. When $\beta &lt; 0$, the price oscillates.</p>
+
+<p>The long-term mean is:</p>
+
+<blockquote>
+$\mu = \frac{c}{1 - \beta}$
+</blockquote>
+
+<p>The "deviation from mean" form (centered AR(1)):</p>
+
+<blockquote>
+$p_t - \mu = \beta \cdot (p_{t-1} - \mu) + \varepsilon_t$
+</blockquote>
+
+<p>Variance of the stationary distribution:</p>
+
+<blockquote>
+$\text{Var}(p_t) = \frac{\sigma^2_\varepsilon}{1 - \beta^2}$
+</blockquote>
+
+<h2>Ornstein–Uhlenbeck — the continuous-time model</h2>
+
+<p>Continuous-time equivalent:</p>
+
+<blockquote>
+$dp_t = \theta \cdot (\mu - p_t)\, dt + \sigma\, dW_t$
+</blockquote>
+
+<p>Where $\theta$ is the mean-reversion speed, $\mu$ is the long-term mean, $\sigma$ is the vol. The relationship to AR(1) at time step $\Delta t$:</p>
+
+<blockquote>
+$\beta = e^{-\theta \Delta t}$, &nbsp; $\sigma^2_\varepsilon = \sigma^2 \cdot \frac{1 - e^{-2\theta \Delta t}}{2\theta}$
+</blockquote>
+
+<p>For small $\Delta t$ (one tick), $\beta \approx 1 - \theta \Delta t$.</p>
+
+<h2>Half-life</h2>
+
+<p>The time for a deviation from the mean to shrink by half:</p>
+
+<blockquote>
+$\tau_{1/2} = \frac{\log(0.5)}{\log(\beta)} = -\frac{\log 2}{\log \beta}$
+</blockquote>
+
+<p>For $\beta$ close to 1 (slow reversion), this is large. For $\beta$ close to 0 (fast reversion), this is small. A practical rule:</p>
+
+<table>
+<tr><th>$\beta$</th><th>Half-life (ticks)</th><th>Meaning</th></tr>
+<tr><td>0.5</td><td>1.0</td><td>Half-gone next tick. Almost white noise.</td></tr>
+<tr><td>0.9</td><td>6.6</td><td>Moderate reversion.</td></tr>
+<tr><td>0.95</td><td>13.5</td><td>Slow reversion. ~13 ticks to halve.</td></tr>
+<tr><td>0.99</td><td>68.9</td><td>Very slow. ~70 ticks to halve.</td></tr>
+<tr><td>0.999</td><td>692</td><td>Almost a random walk.</td></tr>
+</table>
+
+<h2>Z-score and the strategy</h2>
+
+<p>Standardize the price using the fitted mean and standard deviation:</p>
+
+<blockquote>
+$z_t = \frac{p_t - \mu}{\sigma_p}$
+</blockquote>
+
+<p>where $\sigma_p = \sqrt{\text{Var}(p_t)} = \sigma_\varepsilon / \sqrt{1 - \beta^2}$ from the AR(1) fit.</p>
+
+<p>The simple z-score strategy:</p>
+
+<blockquote>
+$z_t &gt; \tau$ (e.g., 2): <b>sell</b> (price is high)<br>
+$z_t &lt; -\tau$: <b>buy</b><br>
+$|z_t| &lt; \text{exit}$ (e.g., 0.5): <b>close</b>
+</blockquote>
+
+<p>Threshold $\tau$ is the entry trigger. Exit at 0 (or near 0) to lock in the reversion. Sizing: linear in z, capped at max position. Bigger $z$ → bigger position.</p>
+
+<h2>How to fit AR(1) in Python</h2>
+
+<pre><code class="language-python">import numpy as np
+from statsmodels.tsa.ar_model import AutoReg
+
+def fit_ar1(prices):
+    """
+    Fit AR(1) to a price series. Returns (c, beta, sigma_eps, mu, sigma_p, half_life).
+    """
+    p = np.asarray(prices, dtype=float)
+    model = AutoReg(p, lags=1).fit()
+    c = model.params[0]      # constant
+    beta = model.params[1]   # AR(1) coefficient
+    sigma_eps = np.sqrt(model.sigma2)
+    mu = c / (1 - beta) if abs(1 - beta) > 1e-9 else p.mean()
+    sigma_p = sigma_eps / np.sqrt(1 - beta**2) if abs(beta) < 1 else sigma_eps
+    half_life = -np.log(2) / np.log(beta) if 0 < beta < 1 else np.inf
+    return {
+        "c": c, "beta": beta, "sigma_eps": sigma_eps,
+        "mu": mu, "sigma_p": sigma_p, "half_life": half_life
+    }
+
+def zscore(prices, params):
+    return (prices[-1] - params["mu"]) / params["sigma_p"]
+</code></pre>
+
+<h2>The strategy in code</h2>
+
+<pre><code class="language-python">def zscore_signal(prices, params, entry=2.0, exit=0.5, max_pos=20):
+    """
+    Generate a z-score signal and a target position.
+    Returns: target_position (signed int)
+    """
+    z = zscore(prices, params)
+    if z > entry:
+        return -max_pos   # price is high, sell
+    elif z < -entry:
+        return +max_pos   # price is low, buy
+    elif abs(z) < exit:
+        return 0          # close
+    else:
+        return None       # hold current position (return None to mean "no change")
+
+# Linear-in-z sizing
+def zscore_position(z, params, scale=10):
+    """Position size scales with |z|. Bigger z = bigger bet."""
+    return int(-z * scale)
+</code></pre>
+
+<h2>The Ornstein–Uhlenbeck estimator (continuous-time)</h2>
+
+<p>Fit the OU parameters by OLS on the discretized form. Let $\Delta p_t = p_{t+1} - p_t$. The OU model says:</p>
+
+<blockquote>
+$\Delta p_t = \theta \mu \Delta t - \theta \Delta t \cdot p_t + \sigma \sqrt{\Delta t} \cdot \varepsilon_t$
+</blockquote>
+
+<p>Regress $\Delta p_t$ on $p_t$ (with intercept). The slope is $-\theta \Delta t$, the intercept is $\theta \mu \Delta t$.</p>
+
+<pre><code class="language-python">def fit_ou(prices, dt=1.0):
+    """Fit OU to a price series via OLS. dt is the time step (in your time units)."""
+    p = np.asarray(prices, dtype=float)
+    dp = np.diff(p)
+    p_lag = p[:-1]
+    # dp = a + b * p_lag  => b = -theta * dt
+    b, a = np.polyfit(p_lag, dp, 1)
+    theta = -b / dt
+    mu = a / (theta * dt) if theta != 0 else p.mean()
+    residuals = dp - (a + b * p_lag)
+    sigma = np.std(residuals) / np.sqrt(dt)
+    half_life = np.log(2) / theta if theta > 0 else np.inf
+    return {"theta": theta, "mu": mu, "sigma": sigma, "half_life": half_life}
+</code></pre>
+
+<h2>Backtesting a z-score strategy</h2>
+
+<p>The walk-forward backtest:</p>
+
+<ol>
+  <li>For each tick $t$ after a warm-up period (e.g., 100 ticks):</li>
+  <li>Fit AR(1) on the past $N$ prices (e.g., $N = 200$, or use expanding window).</li>
+  <li>Compute z-score. Generate signal.</li>
+  <li>If signal fires, place order. Track fill (assume fill at touch).</li>
+  <li>Update inventory and PnL.</li>
+  <li>Continue.</li>
+</ol>
+
+<p>Decompose PnL: spread capture (entry/exit vs mid), inventory drift (the price you paid for being in the trade), holding cost (opportunity cost of capital).</p>
+
+<p>Key parameter to tune: the entry threshold $\tau$. Sweep over $\{0.5, 1, 1.5, 2, 2.5, 3\}$ and pick the one with best Sharpe. A higher $\tau$ means fewer, larger bets; a lower $\tau$ means more, smaller bets. The optimum depends on the half-life: short half-life → smaller $\tau$ (you can re-enter quickly); long half-life → larger $\tau$ (you want a stronger signal to commit).</p>
+
+<h2>When mean reversion works in Prosperity</h2>
+
+<ul>
+  <li>STARFRUIT, ASH, FRUIT — all designed to be mean-reverting. Half-life typically 5-50 ticks.</li>
+  <li>ORCHIDS — fair value driven by external factors, which is itself mean-reverting around the fundamental.</li>
+  <li>Most basket legs — if you regress on a common factor, the residual is mean-reverting.</li>
+</ul>
+
+<h2>When mean reversion FAILS</h2>
+
+<ul>
+  <li><b>Trending series</b> (ROOT, deterministic drift). $\beta$ will be close to 1. Don't trade.</li>
+  <li><b>GBM with no drift</b>. $\beta = 0$, no memory, no reversion. Trade microstructure edges instead.</li>
+  <li><b>Regime changes</b> (the parameter shifts mid-round). Re-fit frequently; distrust old parameters.</li>
+  <li><b>Big jumps</b>. If a single move is more than 5σ, the model is useless. Skip.</li>
+</ul>
+
+<h2>Cheat-sheet</h2>
+
+<table>
+<tr><th>Question</th><th>Formula or step</th></tr>
+<tr><td>Is the series mean-reverting?</td><td>Fit AR(1). Check $0 &lt; \beta &lt; 1$.</td></tr>
+<tr><td>What's the long-term mean?</td><td>$\mu = c / (1 - \beta)$.</td></tr>
+<tr><td>What's the half-life?</td><td>$-\log 2 / \log \beta$.</td></tr>
+<tr><td>What's the z-score?</td><td>$(p_t - \mu) / \sigma_p$.</td></tr>
+<tr><td>When do I enter?</td><td>$|z| > \tau$ (e.g., 2).</td></tr>
+<tr><td>When do I exit?</td><td>$|z| < $ exit (e.g., 0.5).</td></tr>
+<tr><td>How much do I bet?</td><td>Linear in $z$ or capped at max position.</td></tr>
+</table>
+
+<footer style="margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--border); font-size: 13px; color: var(--muted);">
+<p>Once this is internal, jump to <a href="exercises.html">exercises</a>.</p>
+</footer>
+
+</div>
+</body>
+</html>
