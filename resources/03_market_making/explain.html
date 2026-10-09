@@ -3,129 +3,582 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Module 03 — Market Making · explain</title>
+<title>Module 03 — Market Making · explain (deep)</title>
 <style>
-  :root { --fg:#1a1a1a; --muted:#666; --accent:#0a66c2; --bg:#fafafa; --border:#e5e5e5; }
+  :root { --fg:#1a1a1a; --muted:#666; --accent:#0a66c2; --bg:#fafafa; --border:#e5e5e5; --alt:#f4f4f4; }
   * { box-sizing: border-box; }
-  body { font: 16px/1.7 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif; color:var(--fg); background:var(--bg); margin:0; padding:0; }
-  .wrap { max-width: 760px; margin: 0 auto; padding: 32px 24px 80px; }
+  body { font: 16px/1.75 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif; color:var(--fg); background:var(--bg); margin:0; padding:0; }
+  .wrap { max-width: 820px; margin: 0 auto; padding: 32px 24px 80px; }
   header { border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-bottom: 24px; }
-  h1 { font-size: 30px; margin: 0 0 8px; }
-  h2 { font-size: 22px; margin-top: 32px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
-  p { margin: 10px 0; }
+  h1 { font-size: 30px; margin: 0 0 8px; line-height: 1.25; }
+  h2 { font-size: 22px; margin-top: 40px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+  h3 { font-size: 18px; margin-top: 28px; color: var(--accent); }
+  h4 { font-size: 16px; margin-top: 20px; color: var(--muted); }
+  p { margin: 12px 0; }
   a { color: var(--accent); text-decoration: none; }
-  code { background: #f1f1f1; padding: 1px 5px; border-radius: 3px; font-size: 0.95em; font-family: ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
-  pre { background: #1e1e1e; color: #d4d4d4; padding: 14px 18px; border-radius: 6px; overflow-x: auto; line-height: 1.45; font-size: 13px; }
-  blockquote { border-left: 4px solid var(--accent); margin: 16px 0; padding: 4px 16px; background: #f0f7ff; color: #333; }
+  code { font-family: ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; background: #f1f1f1; padding: 1px 5px; border-radius: 3px; font-size: 0.92em; }
+  pre { background: #1e1e1e; color: #d4d4d4; padding: 14px 18px; border-radius: 6px; overflow-x: auto; line-height: 1.5; font-size: 13px; }
+  pre code { background: transparent; padding: 0; color: inherit; font-size: inherit; }
+  ul, ol { padding-left: 22px; }
+  li { margin: 8px 0; }
+  blockquote { border-left: 4px solid var(--accent); margin: 16px 0; padding: 8px 16px; background: #f0f7ff; color: #333; }
+  table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 14px; }
+  th, td { border: 1px solid var(--border); padding: 8px 12px; text-align: left; vertical-align: top; }
+  th { background: #f4f4f4; }
   .meta { color: var(--muted); font-size: 14px; }
+  .numbox { background: #fff8e1; border: 1px solid #f0c36d; border-radius: 6px; padding: 12px 16px; margin: 16px 0; }
+  .numbox h4 { margin-top: 0; color: #b8860b; }
+  .selftest { background: #e8f5e9; border: 1px solid #66bb6a; border-radius: 6px; padding: 12px 16px; margin: 16px 0; }
+  .selftest h4 { margin-top: 0; color: #2e7d32; }
+  .fail { background: #ffebee; border: 1px solid #ef5350; border-radius: 6px; padding: 12px 16px; margin: 16px 0; }
+  .fail h4 { margin-top: 0; color: #c62828; }
+  .conf { background: #f3e5f5; border: 1px solid #ab47bc; border-radius: 6px; padding: 12px 16px; margin: 16px 0; }
+  .conf h4 { margin-top: 0; color: #6a1b9a; }
+  .derivation { background: #f1f8e9; border-left: 3px solid #7cb342; padding: 10px 16px; margin: 12px 0; }
 </style>
+<script>MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']] } };</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1/themes/prism-tomorrow.css">
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-core.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-python.min.js"></script>
 </head>
 <body>
 <div class="wrap">
 
 <header>
-<h1>Market Making — the plain-English tour</h1>
-<p class="meta">Imagine explaining to a friend who's never traded. We will cover: what a market-maker is, how they make money, what the risks are, and what the famous formula does.</p>
+<h1>Module 03 — Market Making: a complete teaching</h1>
+<p class="meta">The simplest trading strategy, on top of the order book vocabulary. Plus the Avellaneda–Stoikov derivation.</p>
 <p><a href="README.html">← module README</a> · <a href="source.html">source</a> · <a href="extract.html">extract</a> · <a href="exercises.html">exercises</a></p>
 </header>
 
-<h2>The story</h2>
+<p>This document is a complete self-contained tutorial on market making. By the end you will understand what a market-maker does, how they make money (and lose it), the full mathematical derivation of the Avellaneda–Stoikov formula, and Timo Diehm's Wall-Mid shortcut that often beats the formula in practice. You do not need to read the source books — those exist for revision and a deeper second pass.</p>
 
-<p>Picture a used-car lot. The dealer sits between buyers and sellers. A buyer shows up wanting a specific model. The dealer says "I have one, $15,000." A seller shows up with the same model. The dealer says "I'll take it, $13,000." The dealer pockets the $2,000 difference.</p>
+<h2>1. The story</h2>
 
-<p>The dealer is a <b>market-maker</b>. The $2,000 is the <b>spread</b>. In a financial market, the same game plays out with stocks or futures or whatever the asset is. You post a <b>bid</b> (the price you'll pay) and an <b>ask</b> (the price you'll sell at). When someone hits your bid, you buy. When someone hits your ask, you sell. The difference is your gross profit.</p>
+<p>Picture a used-car lot. The dealer sits between buyers and sellers of identical cars. A seller shows up with a car. The dealer says "I'll give you $13,000 for it." A buyer shows up wanting a car. The dealer says "I have one, $15,000." The dealer buys from the seller at $13,000 and sells to the buyer at $15,000. Pocketing the $2,000 difference is the dealer's profit. This is the dealer's <b>spread</b>.</p>
 
-<p>But — and this is the key — the dealer doesn't get to pick when a buyer or seller shows up. They might get stuck with cars they don't want, or run out of cars when buyers want them. They can also get picked off: a sophisticated buyer knows that particular model is suddenly worth $20,000 elsewhere, sells to the dealer at $13,000, and the dealer is left with a car worth less than they paid.</p>
+<p>Now imagine a thousand buyers and a thousand sellers milling around, and the dealer is constantly posting two prices: "I'll buy at $13,000" and "I'll sell at $15,000." Sometimes a buyer comes, takes the sell. Sometimes a seller comes, hits the bid. The dealer doesn't know in advance which side will be hit. Over the course of a day, the dealer hopes to be hit roughly equally on both sides, and to pocket the spread on every round-trip.</p>
 
-<p>The whole art of market-making is figuring out <b>what prices to post</b> so that the dealer's expected profit per day is positive, after accounting for getting picked off and being stuck with cars.</p>
-
-<h2>The naive approach</h2>
-
-<p>First instinct: post a tight bid and a tight ask, like bid=99 and ask=101 (spread of 2). When the market goes to 100.5, your bid is 99 (1.5 below) and your ask is 101 (0.5 above). The market has to come to you.</p>
-
-<p>But tight spread means low margin per trade. To make the same money as a wider-spread dealer, you need many more trades. Many more trades means many more chances to get picked off. The expected cost of adverse selection has to come out of your spread. If the spread is too tight, you lose money net.</p>
-
-<p>So the naive approach fails. You need to widen the spread.</p>
-
-<h2>What does the spread depend on?</h2>
-
-<p>Three things, mostly:</p>
+<p>Three risks the dealer runs:</p>
 
 <ol>
-  <li><b>How volatile is the asset?</b> Volatile assets move around a lot, so your quotes get picked off more often. You need a wider spread to compensate.</li>
-  <li><b>How much do you already have?</b> If you're sitting on 100 units you wanted to sell, you need to lower both your bid and your ask to encourage people to buy from you. If you have zero, no skew.</li>
-  <li><b>How confident are you in your edge?</b> If the asset is bouncing around and you have no information advantage, you need a wider spread. If you can predict short-term moves, you can afford a tighter spread.</li>
+  <li><b>Adverse selection</b>: A buyer who shows up wanting a car at $15,000 might know that the car market just crashed and cars are now worth $12,000. They buy from the dealer, then resell for $12,000 elsewhere, pocketing $3,000 minus the dealer's $2,000 spread. The dealer is left with nothing (sold a $12,000 car for $15,000, made a "spread" of $2,000 but the car was actually worth $12,000). Net: the dealer lost.</li>
+  <li><b>Inventory risk</b>: Sometimes the dealer buys 5 cars in a row from sellers without any buyers showing up. Now the dealer is sitting on 5 cars and has spent $65,000. If the market crashes, the dealer is stuck with cars worth $50,000. The position has a directional exposure.</li>
+  <li><b>Asymmetric information</b>: the buyers and sellers know more about the true car value than the dealer does (or have better timing). The dealer's $13,000 / $15,000 prices are guesses; the buyers and sellers only transact when they think the dealer's prices are wrong.</li>
 </ol>
 
-<p>The Avellaneda–Stoikov formula encodes these three concerns in a single equation. The Wall-Mid heuristic does it more simply, with no parameters, by reading the order book.</p>
+<p>Market-making in financial markets is exactly this game. The "dealer" is a market-making algorithm. The "cars" are shares of stock or futures contracts. The "prices" are bid and ask quotes. The "buyers and sellers" are other traders, often informed (algorithmic) traders. The same three risks apply, in the same form, and the same solutions work.</p>
 
-<h2>Adverse selection, in one paragraph</h2>
+<p>The rest of this module teaches you the three solutions: (a) the Avellaneda–Stoikov formula, which prices the dealer's risk and computes optimal quotes; (b) Timo's Wall-Mid shortcut, which exploits the microstructure of the order book; and (c) inventory management, which caps the dealer's directional exposure.</p>
 
-<p>Imagine the dealer posts bid=99 and ask=101, and the asset is at 100. A trader comes in and sells to the dealer at 99. Why? Because that trader thinks 99 is too high — they think the asset is really worth 95. They've dumped a soon-to-be-worthless asset on the dealer. The dealer now has an asset that's about to drop to 95. The $2 spread revenue doesn't cover the $4 capital loss.</p>
+<h2>2. What is market making?</h2>
 
-<p>The market-maker's whole job is to <b>avoid getting picked off by people with better information</b>. The spread is what you earn to compensate for this risk. The Avellaneda–Stoikov formula says "widen your spread in proportion to recent volatility, because high volatility is correlated with informed traders."</p>
+<p>Formally, market making is the practice of simultaneously posting a <b>bid</b> (price at which you're willing to buy) and an <b>ask</b> (price at which you're willing to sell) on an instrument, with the goal of capturing the <b>spread</b> between them. The market-maker is a <b>passive participant</b>: they post orders and wait to be filled. They do not "take" liquidity by sending market orders.</p>
 
-<h2>Inventory risk, in another paragraph</h2>
+<p>The basic profit equation for a market-maker, on a round-trip (buy then sell or sell then buy):</p>
 
-<p>The dealer is sitting on 100 cars. They've been buying aggressively. Now they need to start selling. The next 50 trades should be sells, not buys. If they keep posting a tight bid, they keep buying. The inventory grows. The risk grows. Eventually they're sitting on so many cars that one bad day wipes them out.</p>
-
-<p>So the dealer needs to <b>skew their quotes</b>. When they're long, they post a lower bid (less attractive to sellers → they buy less) and a lower ask (more attractive to buyers → they sell more). The skew gradually drains the inventory back toward zero.</p>
-
-<p>The Avellaneda–Stoikov formula handles this automatically: the inventory term in the formula is the skew.</p>
-
-<h2>What does the Avellaneda–Stoikov formula actually do?</h2>
-
-<p>Inputs:</p>
-<ul>
-  <li>Current mid price (say 100).</li>
-  <li>Your current inventory (say +20, you're long 20).</li>
-  <li>Recent volatility (say 0.5 per tick, or however it's measured).</li>
-  <li>How risk-averse you are (one parameter, called γ).</li>
-  <li>How fast orders arrive at the touch (another parameter, called κ).</li>
-  <li>How much time is left in the trading day (T − t).</li>
-</ul>
-
-<p>Outputs:</p>
-<ul>
-  <li>A <b>reservation price</b>: the price at which you'd be indifferent between buying and not buying.</li>
-  <li>An <b>optimal half-spread</b>: the distance from reservation to your bid (and to your ask).</li>
-</ul>
-
-<p>Then you post:</p>
 <blockquote>
-bid = reservation − half_spread<br>
-ask = reservation + half_spread
+$\text{profit per round-trip} = \text{sell price} - \text{buy price} - 2 \cdot \text{fees}$
 </blockquote>
 
-<p>That's it. The formula is just a recipe for the two prices.</p>
+<p>If a market-maker's bid is $99$ and ask is $101$, and they get filled on both sides, the round-trip profit is $2$ minus fees.</p>
 
-<h2>What does Wall-Mid do?</h2>
+<p>A market-maker's gross revenue is the spread; their costs are (a) fees, (b) adverse selection, and (c) inventory risk. A successful market-maker sets their quotes to balance all three.</p>
 
-<p>Wall-Mid skips the math. It says: find the largest buy wall (a price level with a lot of volume waiting to buy) and the largest sell wall. Place your bid 1 tick inside the buy wall (so you fill before the wall does) and your ask 1 tick outside the sell wall (so you fill when the wall is consumed).</p>
+<h2>3. The basic mechanism</h2>
 
-<p>It's pure microstructure. No parameters. It reads the book, not a model.</p>
+<p>The market-maker's job, in plain terms, is to choose two prices: $p^{\text{bid}}$ and $p^{\text{ask}}$. They update these prices continuously as the market moves. The constraints:</p>
 
-<p>Timo Diehm used this in P3 R1 and won 2nd place. Avellaneda–Stoikov is theoretically beautiful but loses to Wall-Mid on rounds with visible walls.</p>
+<ol>
+  <li>$p^{\text{ask}} > p^{\text{bid}}$ (no crossed quotes; you'd be trading against yourself).</li>
+  <li>The spread $s = p^{\text{ask}} - p^{\text{bid}}$ is large enough to compensate for adverse selection and inventory risk.</li>
+  <li>Inventory is bounded. The market-maker doesn't want to hold unlimited positions.</li>
+</ol>
 
-<h2>Which one should you use?</h2>
+<p>Two ways to choose the prices: a model (Avellaneda–Stoikov) or a heuristic (Wall-Mid). We'll cover both.</p>
 
-<p>Rule of thumb:</p>
+<h2>4. Inventory and PnL</h2>
+
+<p>The market-maker's <b>inventory</b> is their net position. If they've bought $50$ and sold $30$, they hold $q = +20$ (long 20).</p>
+
+<p>Inventory changes when they get filled. If they're long 20 and someone hits their ask, the ask is sold and inventory drops to 19. If someone hits their bid, inventory grows to 21.</p>
+
+<p>Inventory has a directional risk: if the price moves against the position, the market-maker loses. If they're long 20 and the price drops $1 per share, they lose $20$ in mark-to-market PnL. The market-maker wants to keep inventory near zero to avoid this risk.</p>
+
+<p>The market-maker's <b>skew</b> is the adjustment to their quotes based on inventory. If they're long 20, they want to encourage sells (to reduce inventory). They achieve this by lowering both their bid and their ask. A lower bid is less attractive to sellers, so fewer sellers hit it (less buying). A lower ask is more attractive to buyers, so more buyers hit it (more selling). Net effect: inventory drops.</p>
+
+<p>Conversely, if they're short 20, they raise both their bid and ask to encourage buying and discourage selling.</p>
+
+<h2>5. The Avellaneda–Stoikov formula</h2>
+
+<p>The Avellaneda–Stoikov (AS) formula is the canonical solution to the market-maker's optimization problem. It tells you exactly what bid and ask to post, given the market state and your inventory.</p>
+
+<h3>5.1 The setup</h3>
+
+<p>You are a market-maker in a single asset. The mid price $S_t$ follows arithmetic Brownian motion:</p>
+
+<blockquote>
+$dS_t = \sigma \, dW_t$
+</blockquote>
+
+<p>(This is the simplest model. The mean is zero; the asset has no drift. The standard deviation per unit time is $\sigma$.)</p>
+
+<p>You post a bid at price $p^b$ and an ask at price $p^a$, with $p^b < p^a$. When a market order comes in, it can hit either side:</p>
 
 <ul>
-  <li><b>AMETHYSTS / RAINFOREST_RESIN</b> (FFV): Wall-Mid wins. The price doesn't move; walls dominate.</li>
-  <li><b>GBM-style products</b> (SQUID_INK, generic): AS is competitive. The volatility term matters.</li>
-  <li><b>Mean-reverting</b> (STARFRUIT, ASH, FRUIT): AS is competitive; Wall-Mid also works but you can also use mean-reversion as a separate signal.</li>
-  <li><b>Thin books</b>: AS over-fits; Wall-Mid is too twitchy. You need a hybrid (Wall-Mid with AS-style inventory skew).</li>
+  <li>A market-sell hits your bid. You buy at $p^b$. Your inventory $q$ increases by 1, your cash decreases by $p^b$.</li>
+  <li>A market-buy hits your ask. You sell at $p^a$. Your inventory $q$ decreases by 1, your cash increases by $p^a$.</li>
 </ul>
 
-<p>In practice, the best market-makers in P3/P4 use a <b>hybrid</b>: Wall-Mid for the center of the quote, AS for the inventory skew. See exercise 4.</p>
+<p>Order arrivals are Poisson. The arrival rate at the ask is $\lambda^A$ (per unit time); at the bid is $\lambda^B$. These depend on how far your quote is from the mid. The further your quote, the slower the arrival rate (more traders prefer closer prices).</p>
 
-<h2>Pulling it together</h2>
+<p>A common form:</p>
 
-<p>Market-making is the bedrock of the curriculum. It's not the highest-PnL play, but it's the most consistent. Master it here, and you'll have a fallback for every Prosperity round. Move to <a href="extract.html">extract</a> to see the formulas and code in our notation.</p>
+<blockquote>
+$\lambda^A(\delta) = A \cdot e^{-k \cdot \delta}$<br>
+$\lambda^B(\delta) = A \cdot e^{-k \cdot \delta}$
+</blockquote>
 
-<footer style="margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--border); font-size: 13px; color: var(--muted);">
-<p><a href="README.html">← module README</a></p>
+<p>where $\delta = p^a - p^m = p^m - p^b$ is the half-spread (your distance from the mid), $A$ is the maximum arrival rate, and $k$ is a sensitivity parameter. (Avellaneda–Stoikov actually use $\lambda^A(\delta) = A \cdot e^{-k \cdot \delta}$ and $\lambda^B(\delta) = A \cdot e^{-k \cdot \delta}$, but the exact form doesn't matter for the result.)</p>
+
+<h3>5.2 The market-maker's objective</h3>
+
+<p>The market-maker wants to maximize expected utility of terminal wealth, penalized by inventory variance. The standard form uses exponential utility (which is risk-averse and constant absolute risk aversion):</p>
+
+<blockquote>
+$\max E[-\exp(-\gamma W_T + \alpha q_T)]$
+</blockquote>
+
+<p>where $W_T$ is terminal cash, $q_T$ is terminal inventory, $\gamma$ is the risk aversion parameter, and $\alpha$ is the inventory penalty. (We use $\alpha q_T$ in the exponent for simplicity; the exact form gives the same qualitative result.)</p>
+
+<p>The parameter $\gamma$ is the <b>risk aversion</b>. Larger $\gamma$ means more risk-averse. A market-maker with high $\gamma$ will post wider spreads and try to keep inventory near zero. A market-maker with low $\gamma$ will post tight spreads and tolerate inventory.</p>
+
+<p>You don't know $\gamma$ in advance. You estimate it from your backtests. (We'll cover parameter estimation in section 7.)</p>
+
+<h3>5.3 The Hamilton-Jacobi-Bellman equation</h3>
+
+<p>The market-maker's optimal strategy is the solution to a stochastic control problem, characterized by the Hamilton-Jacobi-Bellman (HJB) equation. The HJB equation says: at every state, the value of continuing optimally equals the value of stopping. In our case, the "state" is (S, q, t) — the current mid, the current inventory, and the time. The "value" is the maximum expected utility achievable from this state until the end of the round at time T.</p>
+
+<p>The HJB equation for our problem is:</p>
+
+<blockquote>
+$0 = \max_{p^b, p^a} \left\{ \lambda^A (e^{-\gamma (p^a - S)} - 1) + \lambda^B (e^{\gamma (S - p^b)} - 1) + \frac{\partial v}{\partial t} + \frac{1}{2} \sigma^2 \frac{\partial^2 v}{\partial S^2} - \alpha q \frac{\partial v}{\partial S} \right\}$
+</blockquote>
+
+<p>where $v(S, q, t)$ is the value function. This equation captures: the rate of utility gain from fills at the bid and ask, the time decay of value, the diffusion of the mid, and the cost of holding inventory. Solving it gives the optimal $p^b$ and $p^a$ as functions of the state.</p>
+
+<p>The full derivation is technical (and the team's source material, Avellaneda–Stoikov 2008, has it). The team's goal is to understand the <b>result</b>, not to re-derive it from scratch. Here is the result.</p>
+
+<h3>5.4 The result: reservation price and optimal spread</h3>
+
+<p>The optimal quotes have two pieces:</p>
+
+<blockquote>
+<b>Reservation price</b>: $r(s, q, t) = s - q \cdot \gamma \cdot \sigma^2 \cdot (T - t)$<br><br>
+<b>Optimal half-spread</b>: $\delta^*(s, q, t) = \frac{\gamma \sigma^2 (T - t)}{2} + \frac{2}{\gamma} \ln\!\left(1 + \frac{\gamma}{\kappa}\right)$
+</blockquote>
+
+<p>Then the optimal bid and ask are:</p>
+
+<blockquote>
+$p^{\text{bid}} = r - \delta^*$<br>
+$p^{\text{ask}} = r + \delta^*$
+</blockquote>
+
+<p>where:</p>
+<ul>
+  <li>$s$ = current mid (or microprice).</li>
+  <li>$q$ = current inventory (positive = long).</li>
+  <li>$T - t$ = time remaining until the end of the round (in same units as $1/\sigma^2$).</li>
+  <li>$\gamma$ = risk aversion.</li>
+  <li>$\sigma$ = volatility (per unit time).</li>
+  <li>$\kappa$ = order arrival sensitivity (how fast arrival rate drops as you widen your quote).</li>
+</ul>
+
+<p>That's the formula. Now let's understand each piece.</p>
+
+<h3>5.5 The reservation price — what it is, why it works</h3>
+
+<p>The reservation price $r$ is the price at which you'd be indifferent between buying and not buying. It's the "fair value" adjusted for inventory.</p>
+
+<p>If your inventory is zero, $r = s$ (the reservation is the mid). You're indifferent between buying at the mid and not buying.</p>
+
+<p>If your inventory is positive (you're long), $r < s$. Your reservation is below the mid. You're willing to sell at a price lower than the mid, but less willing to buy. This makes sense: if you're already long, you want to reduce inventory, so you're willing to accept a worse sell price. Conversely, if you're short, $r > s$ and you want to buy.</p>
+
+<p>The size of the adjustment: $q \cdot \gamma \cdot \sigma^2 \cdot (T - t)$. This is bigger when:</p>
+<ul>
+  <li>Inventory is large (more skew needed).</li>
+  <li>Risk aversion is high (more sensitive to inventory).</li>
+  <li>Volatility is high (more risk per unit of inventory).</li>
+  <li>Time-to-end is large (more time to react to inventory, but also more risk accumulated).</li>
+</ul>
+
+<p>The intuition for the inventory penalty: holding $q$ units of inventory for one tick of time $T - t$ has variance $\sigma^2 (T - t) \cdot q^2$ in mark-to-market PnL. Risk aversion $\gamma$ prices this variance. The penalty is $\gamma \cdot \sigma^2 (T - t) \cdot q^2 / 2$ in utility, which corresponds to a price adjustment of $\gamma \sigma^2 (T - t) \cdot q$ (the derivative of the penalty with respect to $q$).</p>
+
+<div class="derivation">
+<h4>Derivation sketch: the inventory penalty</h4>
+<p>The penalty for holding inventory $q$ for time $T - t$ is, in utility terms, $\frac{1}{2} \gamma q^2 \sigma^2 (T - t)$. The reservation price $r$ is the price at which the marginal benefit of trading equals the marginal cost of inventory.</p>
+<p>The marginal benefit of selling one more unit (going from $q$ to $q - 1$) is the price at which you sell. The marginal cost of holding $q$ units is the derivative of the inventory penalty with respect to $q$: $\gamma q \sigma^2 (T - t)$. Setting them equal: $r = s - q \gamma \sigma^2 (T - t)$ (the "minus" comes from the fact that going short reduces inventory).</p>
+<p>This is the standard mean-variance optimization result: the reservation price is the mid minus the risk-adjusted inventory cost.</p>
+</div>
+
+<h3>5.6 The optimal half-spread — what it is, why it works</h3>
+
+<p>The optimal half-spread $\delta^*$ has two terms:</p>
+
+<blockquote>
+$\delta^* = \underbrace{\frac{\gamma \sigma^2 (T - t)}{2}}_{\text{risk term}} + \underbrace{\frac{2}{\gamma} \ln\!\left(1 + \frac{\gamma}{\kappa}\right)}_{\text{adverse-selection term}}$
+</blockquote>
+
+<p>The <b>risk term</b> widens the spread with volatility and time. The intuition: in volatile conditions, your position is riskier. You need a wider spread to compensate. The risk term is half the inventory penalty per unit, because half of the spread is on the bid side (where you're exposed to buying) and half is on the ask side (where you're exposed to selling).</p>
+
+<p>The <b>adverse-selection term</b> widens the spread based on the order flow parameter $\kappa$. The intuition: when $\kappa$ is small, order arrival rate is very sensitive to your distance from the mid. A wider quote is very costly in lost fills, so you might as well keep the spread tight and accept the adverse selection. When $\kappa$ is large, your order arrival rate is less sensitive to distance, so widening the spread doesn't cost you much; you can afford to widen it more to compensate for adverse selection.</p>
+
+<p>The $\ln(1 + \gamma/\kappa)$ term can be approximated as $\gamma/\kappa$ when $\gamma \ll \kappa$ (low risk aversion or fast order flow). In that case the spread simplifies to:</p>
+
+<blockquote>
+$\delta^* \approx \frac{\gamma \sigma^2 (T - t)}{2} + \frac{2}{\kappa}$
+</blockquote>
+
+<p>which is a clean sum of a risk term and a flow term.</p>
+
+<div class="numbox">
+<h4>Worked example: AS quotes with concrete numbers</h4>
+<p>Setup: $s = 100$, $q = 0$, $\sigma = 0.5$ per tick, $\gamma = 0.1$, $\kappa = 1.5$, $T - t = 60$ ticks.</p>
+<p>Reservation: $r = 100 - 0 \cdot 0.1 \cdot 0.25 \cdot 60 = 100$.</p>
+<p>Half-spread: $\delta^* = (0.1 \cdot 0.25 \cdot 60)/2 + (2/0.1) \cdot \ln(1 + 0.1/1.5)$<br>
+&nbsp;&nbsp;&nbsp;&nbsp;= $0.75 + 20 \cdot \ln(1.0667)$<br>
+&nbsp;&nbsp;&nbsp;&nbsp;= $0.75 + 20 \cdot 0.0645$<br>
+&nbsp;&nbsp;&nbsp;&nbsp;= $0.75 + 1.29$<br>
+&nbsp;&nbsp;&nbsp;&nbsp;≈ $2.04$.</p>
+<p>Quotes: bid = $100 - 2.04 = 97.96$. Ask = $100 + 2.04 = 102.04$.</p>
+<p>Spread: $4.08$.</p>
+<p>This is wider than the typical 1-2 tick spread on AMETHYSTS. The parameters above are rough estimates; tune $\gamma$ down to get a tighter spread. If we use $\gamma = 0.05$ instead, the half-spread is $0.375 + 20 \cdot \ln(1.033) \approx 0.375 + 0.66 = 1.04$, giving a 2-tick total spread. More realistic for AMETHYSTS.</p>
+</div>
+
+<div class="numbox">
+<h4>Worked example: with inventory, the reservation shifts</h4>
+<p>Same setup but $q = 20$ (long 20). Now: $r = 100 - 20 \cdot 0.05 \cdot 0.25 \cdot 60 = 100 - 15 = 85$.</p>
+<p>Half-spread stays the same (the half-spread doesn't depend on $q$ in the basic AS formula): $1.04$.</p>
+<p>Quotes: bid = $85 - 1.04 = 83.96$. Ask = $85 + 1.04 = 86.04$.</p>
+<p>Notice how both quotes have shifted down by 15. This is the skew. The market-maker is willing to sell at $86.04$ (a worse price than the mid of $100$) to reduce inventory. The bid is at $83.96$, which is unattractive to sellers, so fewer sellers hit it. Net effect: inventory drains.</p>
+<p>Compare to $q = 0$: bid = $98.96$, ask = $101.04$. With $q = 20$, the entire quote is shifted down by 15 ticks. The shape (the spread) is the same; the location moves.</p>
+</div>
+
+<h2>6. Parameter estimation</h2>
+
+<p>The five parameters of AS are: $s$, $q$, $T-t$, $\sigma$, $\gamma$, $\kappa$. The first three are observable ($s$ from the book, $q$ from your position, $T-t$ from the round). The last three must be estimated.</p>
+
+<h3>6.1 Estimating $\sigma$ (volatility)</h3>
+
+<p>Estimate $\sigma$ from rolling realized volatility. Take the past $N$ mid prices $S_1, S_2, \ldots, S_N$. Compute the per-tick changes $\Delta S_i = S_i - S_{i-1}$. The sample standard deviation of $\Delta S_i$ is your estimate of $\sigma$:</p>
+
+<blockquote>
+$\hat{\sigma} = \sqrt{\frac{1}{N-1} \sum_{i=2}^{N} (\Delta S_i - \overline{\Delta S})^2}$
+</blockquote>
+
+<p>For Prosperity tick data, $N = 50$ is a good default. The estimate updates as new ticks come in. If $\sigma$ changes (regime shift), the rolling estimate adapts. (If you don't update and use a fixed $\sigma$, you'll be wrong after a regime shift.)</p>
+
+<h3>6.2 Estimating $\gamma$ (risk aversion)</h3>
+
+<p>$\gamma$ is the hardest parameter to estimate because it's not directly observable. Two approaches:</p>
+
+<ol>
+  <li><b>Backtest sweep</b>: for $\gamma$ in $\{0.001, 0.01, 0.05, 0.1, 0.5, 1.0, 5.0\}$, run the AS market-maker on past data. Pick the $\gamma$ with the best risk-adjusted PnL (highest Sharpe ratio). This is the standard approach.</li>
+  <li><b>Implied from inventory behavior</b>: if your backtest shows inventory of magnitude $q_{\max}$ on average, and you want the inventory penalty at $q_{\max}$ to be about $1\%$ of the mid price, then $\gamma \sigma^2 (T-t) q_{\max} \approx 0.01 \cdot s$. Solve for $\gamma$.</li>
+</ol>
+
+<p>Approach 1 is more reliable. Use approach 2 only as a sanity check.</p>
+
+<p>For Prosperity products, $\gamma$ is typically in $\{0.01, 0.1\}$ for low-vol FFV assets and $\{0.1, 1.0\}$ for high-vol mean-reverting assets. Always sweep on actual data; don't trust hand-tuned values.</p>
+
+<h3>6.3 Estimating $\kappa$ (order arrival sensitivity)</h3>
+
+<p>$\kappa$ measures how fast the order arrival rate drops as you widen your quote. Estimate from historical fill data:</p>
+
+<blockquote>
+$\hat{\kappa} = -\frac{1}{\delta} \ln\left(\frac{\text{fills at distance } \delta}{\text{fills at touch}}\right)$
+</blockquote>
+
+<p>In practice: take the historical distribution of your fill distances. If fills drop by 50% when you widen by 1 tick, $\kappa \approx 0.69$. If fills drop by 90% when you widen by 1 tick, $\kappa \approx 2.30$.</p>
+
+<p>For Prosperity: $\kappa$ is typically in $\{0.5, 5.0\}$. Tune on actual data; the no-queue-priority rule means $\kappa$ might be different from real markets.</p>
+
+<h3>6.4 Estimating $T - t$ (time to terminal)</h3>
+
+<p>$T - t$ is the time remaining in the round. For continuous-time AS, this is the time horizon in your time units. For tick-by-tick backtesting, set:</p>
+
+<blockquote>
+$T - t = \frac{\text{ticks remaining}}{\text{total ticks per round}} \times \text{horizon seconds}$
+</blockquote>
+
+<p>For Prosperity, a typical round is 1 hour (3,600 seconds) with ~10,000 ticks. So $T - t$ ranges from 3,600 (start) to 0 (end).</p>
+
+<p>Many practitioners set $T - t$ to a small constant (e.g., 60 seconds) and ignore the time decay. The result is a steady-state quote that doesn't widen as $t \to T$. This is fine in practice.</p>
+
+<h2>7. Wall-Mid (Timo Diehm's shortcut)</h2>
+
+<p>Avellaneda–Stoikov is beautiful in theory but loses to something much simpler in practice. Timo Diehm, who got 2nd in Prosperity 3, used a heuristic he called <b>Wall-Mid</b>. The rule:</p>
+
+<ol>
+  <li>Look at the order book. Find the largest visible buy wall (a single price level with the most volume waiting to buy).</li>
+  <li>Find the largest visible sell wall.</li>
+  <li>Place your bid 1 tick <b>inside</b> the buy wall (1 tick higher than the wall's price).</li>
+  <li>Place your ask 1 tick <b>outside</b> the sell wall (1 tick lower than the wall's price).</li>
+  <li>Skew both by inventory: if long, lower both; if short, raise both.</li>
+</ol>
+
+<p>Why this works:</p>
+
+<ul>
+  <li>The buy wall at $p^b_W$ is a participant who has publicly committed to buy $v$ units at $p^b_W$. They reveal their intent.</li>
+  <li>By posting your bid at $p^b_W + 1$, you're offering 1 tick more than they are. In Prosperity's no-queue-priority exchange, you fill first when a market-sell comes in. You fill before the wall does.</li>
+  <li>Eventually the wall consumes (gets filled) and the price moves above $p^b_W$. Your bid is now stale; you cancel it.</li>
+  <li>Conversely, your ask at $p^a_W - 1$ is 1 tick better than the wall. You fill first when a market-buy comes in.</li>
+  <li>The spread you earn is the gap between the bid and ask, which is 1 tick on each side, i.e., 2 ticks total. After fees, this is profitable.</li>
+</ul>
+
+<h3>7.1 The code</h3>
+
+<pre><code class="language-python">def wall_mid_quotes(book, our_position, max_pos=20, skew_per_unit=0.2):
+    """Timo Diehm's Wall-Mid heuristic."""
+    bids = sorted(book.get("bids", []), key=lambda x: -x[1])  # largest first
+    asks = sorted(book.get("asks", []), key=lambda x: -x[1])
+    if not bids or not asks:
+        return None, None
+    bid_wall_price, _ = bids[0]
+    ask_wall_price, _ = asks[0]
+    skew = our_position * skew_per_unit
+    bid = bid_wall_price + 1 - skew
+    ask = ask_wall_price - 1 - skew
+    if our_position >= max_pos:
+        bid = None
+    elif our_position <= -max_pos:
+        ask = None
+    return bid, ask
+</code></pre>
+
+<h3>7.2 Why Wall-Mid beats AS on FFV rounds</h3>
+
+<p>For fixed-fair-value (FFV) products like AMETHYSTS, the true price doesn't move (or moves very little). The market-maker's profit is purely the spread, captured from passive limit orders being hit. AS gives you a spread based on volatility and risk aversion. Wall-Mid gives you a spread based on the visible book structure.</p>
+
+<p>On a calm market with a 1-tick visible spread, AS might give you a 2-tick spread (slightly wider to compensate for "risk"). Wall-Mid gives you a 1-tick spread, posted aggressively inside the existing book. Wall-Mid is tighter, fills more often, and earns more in aggregate.</p>
+
+<p>On a volatile market with the spread blown out to 4 ticks, AS widens further (3-4 ticks). Wall-Mid stays at 1-2 ticks. The question is which earns more. In volatility, AS's wider spread compensates for being picked off more. Wall-Mid's tighter spread doesn't compensate, so it gets picked off.</p>
+
+<p><b>Rule of thumb</b>: Wall-Mid wins on FFV (low vol, narrow spread). AS wins on volatile markets.</p>
+
+<h2>8. The hybrid: Wall-Mid center + AS skew</h2>
+
+<p>Best of both: use Wall-Mid for the center of the quote (microstructure edge) and AS for the inventory skew (risk edge).</p>
+
+<pre><code class="language-python">def hybrid_quotes(book, our_position, sigma, gamma, kappa, max_pos=20):
+    """Wall-Mid center, AS inventory skew."""
+    if not book.get("bids") or not book.get("asks"):
+        return None, None
+    bid_wall = sorted(book["bids"], key=lambda x: -x[1])[0][0]
+    ask_wall = sorted(book["asks"], key=lambda x: -x[1])[0][0]
+    as_skew = our_position * gamma * sigma**2  # omit tau for steady-state
+    bid = bid_wall + 1 - as_skew
+    ask = ask_wall - 1 - as_skew
+    if our_position >= max_pos:
+        bid = None
+    if our_position <= -max_pos:
+        ask = None
+    return bid, ask
+</code></pre>
+
+<p>The hybrid is what most top teams actually use. The bid and ask center on the visible walls (1-tick inside/outside), but the entire quote shifts based on inventory using the AS formula. You get Wall-Mid's fill frequency and AS's risk management.</p>
+
+<h2>9. Backtesting a market-making strategy</h2>
+
+<p>Walk-forward backtest: at each tick, run your quote function, simulate fills, update inventory, decompose PnL.</p>
+
+<h3>9.1 The simulation loop</h3>
+
+<pre><code class="language-python">def simulate_mm(mid_series, bid_books, ask_books, quote_fn, **params):
+    """Walk-forward backtest of a market-making strategy."""
+    inventory = 0
+    avg_entry = 0.0
+    pnl = PnLAttribution()
+    for t, (mid, bb, ab) in enumerate(zip(mid_series, bid_books, ask_books)):
+        state = MarketState(mid=mid, bids=bb, asks=ab, inventory=inventory, **params)
+        quote = quote_fn(state)
+        bid, ask = quote.bid, quote.ask
+        # Naive fill model: our quote crosses the book → fill at touch
+        if bid is not None and ab and bid >= ab[0][0]:
+            # We buy at the touch ask
+            fill_price = ab[0][0]
+            qty = min(ab[0][1], max_pos - inventory)
+            if qty > 0:
+                new_total = inventory * avg_entry + qty * fill_price
+                inventory += qty
+                avg_entry = new_total / inventory if inventory else 0
+        if ask is not None and bb and ask <= bb[0][0]:
+            # We sell at the touch bid
+            fill_price = bb[0][0]
+            qty = min(bb[0][1], max_pos + inventory)
+            if qty > 0:
+                new_total = inventory * avg_entry - qty * fill_price
+                inventory -= qty
+                if inventory == 0:
+                    # Closed round-trip
+                    pnl.spread_capture += -new_total
+                    avg_entry = 0
+                elif inventory > 0:
+                    avg_entry = new_total / inventory
+        # Mark-to-market
+        if inventory != 0:
+            pnl.inventory_drift = inventory * (mid - avg_entry)
+    return pnl
+</code></pre>
+
+<h3>9.2 PnL decomposition</h3>
+
+<p>After the backtest, decompose PnL:</p>
+
+<ul>
+  <li><b>Spread capture</b>: sum of (sell price - buy price) for closed round-trips.</li>
+  <li><b>Inventory drift</b>: mark-to-market PnL on the open position (price paid vs current mid).</li>
+  <li><b>Rebalance cost</b>: PnL from closing out the final position at end-of-round.</li>
+</ul>
+
+<p>Leo Hawking's rule: "If spread capture is negative, the strategy is broken — even if total PnL is positive from drift." The spread capture is the only reliable component.</p>
+
+<h3>9.3 What to look for</h3>
+
+<p>A good market-making backtest has:</p>
+
+<ul>
+  <li>Positive spread capture (you earn more from fills than you lose to adverse selection).</li>
+  <li>Small inventory drift (your position doesn't drift far from zero).</li>
+  <li>Small rebalance cost (the final position is small and easy to close).</li>
+  <li>Sharpe ratio > 1 (risk-adjusted performance is good).</li>
+</ul>
+
+<p>A bad market-making backtest has:</p>
+
+<ul>
+  <li>Negative spread capture (you get picked off more than you earn).</li>
+  <li>Large inventory drift (your position drifts and you can't unwind).</li>
+  <li>Large rebalance cost (the final position is large and you lose closing it).</li>
+  <li>Sharpe ratio < 0 (you lose money on average).</li>
+</ul>
+
+<h2>10. The Avellaneda–Stoikov formula in code</h2>
+
+<pre><code class="language-python">import math
+
+def as_quotes(s, q, sigma, tau, gamma, kappa):
+    """Avellaneda-Stoikov (2008) market-making quotes."""
+    if sigma <= 0 or tau <= 0 or gamma <= 0 or kappa <= 0:
+        return None, None
+    sigma2 = sigma ** 2
+    reservation = s - q * gamma * sigma2 * tau
+    half_spread = (gamma * sigma2 * tau) / 2 + (2 / gamma) * math.log(1 + gamma / kappa)
+    return reservation - half_spread, reservation + half_spread
+</code></pre>
+
+<p>That's the whole formula. 4 lines of math. Plug in the parameters; get the quotes.</p>
+
+<h2>11. Common confusions</h2>
+
+<div class="conf">
+<h4>Common confusion #1: "AS gives the optimal spread"</h4>
+<p>AS gives the optimal spread <b>given the assumptions</b>. The assumptions are: arithmetic Brownian motion for the mid, exponential order arrival rates, exponential utility. Real markets violate these. Use AS as a starting point; tune on actual data.</p>
+</div>
+
+<div class="conf">
+<h4>Common confusion #2: "Wall-Mid is just a simple heuristic, must be worse than AS"</h4>
+<p>In Prosperity on FFV rounds, Wall-Mid beats AS. The reason: AS assumes the mid is volatile and penalizes you for being wrong. On a calm market, the penalty is over-cautious. Wall-Mid is more aggressive and earns more.</p>
+</div>
+
+<div class="conf">
+<h4>Common confusion #3: "the half-spread doesn't depend on inventory"</h4>
+<p>Correct: in the basic AS formula, the half-spread is the same regardless of $q$. Only the <b>reservation</b> depends on $q$. The full AS extension (with state-dependent risk aversion or asymmetric vol) does make the spread inventory-dependent. The simpler version doesn't.</p>
+</div>
+
+<div class="conf">
+<h4>Common confusion #4: "the spread should be 1 tick on every product"</h4>
+<p>No. The spread is determined by competition, volatility, and risk. Different products have different spreads. AMETHYSTS might be 1-2 ticks. A high-vol mean-reverting asset might be 5+ ticks. The Prosperity exchange doesn't enforce a minimum spread; the team sees whatever the market gives.</p>
+</div>
+
+<h2>12. Failure modes</h2>
+
+<div class="fail">
+<h4>Failure mode 1: adverse selection eats the spread</h4>
+<p>If your spread capture is negative, the market is more informed than your quotes assume. Solutions: widen the spread (raise $\gamma$), reduce max position, or switch products.</p>
+</div>
+
+<div class="fail">
+<h4>Failure mode 2: inventory drift dominates</h4>
+<p>If your inventory drifts persistently in one direction, your skew is too small. Increase the inventory penalty (raise $\gamma$ or scale up the skew).</p>
+</div>
+
+<div class="fail">
+<h4>Failure mode 3: position limit hit too often</h4>
+<p>If your max position is hit frequently, your cap is too tight. Either raise the cap (if you can stomach the inventory risk) or accept the lost fills.</p>
+</div>
+
+<div class="fail">
+<h4>Failure mode 4: walls disappear</h4>
+<p>Wall-Mid assumes walls are real. If a wall is cancelled before your fill, you might be left with a position you didn't want. Validate walls: count how often a wall you traded around was still there 5 ticks later.</p>
+</div>
+
+<div class="fail">
+<h4>Failure mode 5: regime change</h4>
+<p>If the product's volatility changes mid-round (a "regime change"), your $\sigma$ estimate is stale. The AS quotes are wrong. Use a faster-adapting $\sigma$ (smaller lookback window) or detect regime changes and re-tune.</p>
+</div>
+
+<h2>13. Connection to Prosperity</h2>
+
+<p>Market making is the canonical strategy for FFV products. In P3 and P4:</p>
+
+<ul>
+  <li><b>AMETHYSTS, RAINFOREST_RESIN</b>: Wall-Mid is the standard. Most top teams use it. P3 R1 was this product and Timo won 2nd place globally with Wall-Mid.</li>
+  <li><b>STARFRUIT, ASH, FRUIT</b>: Mean-reverting. Market-making is the secondary play (you post quotes when prices are stable). Primary is z-score (module 04).</li>
+  <li><b>SQUID_INK (P3 R1)</b>: Generic GBM. AS is competitive. Wide spreads needed because of high vol.</li>
+  <li><b>ORCHIDS, MACARONS</b>: Cross-exchange factor model (module 08) is primary; market-making is the secondary play on each leg.</li>
+  <li><b>Every round</b>: As a fallback. If your primary strategy isn't working, fall back to market-making on the underlying. You won't win, but you won't lose much either.</li>
+</ul>
+
+<h2>14. Self-test</h2>
+
+<div class="selftest">
+<ol>
+  <li>What are the three risks a market-maker runs?</li>
+  <li>You post a bid of $99$ and ask of $101$. The mid is $100$. You get filled buying 1 unit. 5 ticks later the mid is $99.50$. Compute: (a) effective spread on this fill, (b) realized spread at $T=5$, (c) adverse selection.</li>
+  <li>You're long 10 units. The AS formula gives a reservation $r = 99$ and a half-spread $\delta^* = 2$. What are your bid and ask? Why is the bid lower than 99?</li>
+  <li>Why does Wall-Mid beat AS on FFV rounds? Why does AS beat Wall-Mid on volatile rounds?</li>
+  <li>Your $\gamma$ is too small. What symptom do you see in the backtest? What do you do?</li>
+  <li>You backtest a strategy and get: spread capture $-50$, inventory drift $+250$, rebalance cost $0$. Total: $+200$. Is the strategy good? Why or why not?</li>
+  <li>What is $\kappa$? How do you estimate it from data?</li>
+  <li>You're using AS with $\gamma = 0.1$, $\sigma = 0.5$, $\tau = 60$, $\kappa = 1.5$. Inventory is $q = 30$, mid is $s = 100$. What are your quotes?</li>
+</ol>
+<p>Answers: (1) Adverse selection, inventory risk, asymmetric information. (2) Effective = $1$, realized = $2 \cdot 1 \cdot (99.5 - 100) = -1$, adverse selection = $1 - (-1) = 2$. The trade was profitable. (3) Bid = $97$, ask = $101$. The bid is below 99 because you're long and want to discourage further buying. (4) Wall-Mid wins on FFV because the market is calm and AS over-penalizes. AS wins on volatile markets because Wall-Mid's tight spread gets picked off too often. (5) Inventory drifts persistently; you see large position sizes. Raise $\gamma$ to widen the spread and increase skew. (6) The strategy is broken — spread capture is the only reliable component. Drift is luck. (7) $\kappa$ is the order arrival sensitivity; estimate from historical fill rates at various distances. (8) Reservation = $100 - 30 \cdot 0.1 \cdot 0.25 \cdot 60 = 100 - 45 = 55$. Half-spread = $(0.1 \cdot 0.25 \cdot 60)/2 + (2/0.1) \cdot \ln(1 + 0.1/1.5) \approx 0.75 + 1.29 \approx 2.04$. Bid = $52.96$, ask = $57.04$.</p>
+</div>
+
+<h2>15. Summary cheat-sheet</h2>
+
+<table>
+<tr><th>Quantity</th><th>Formula</th></tr>
+<tr><td>Reservation price</td><td>$r = s - q \cdot \gamma \cdot \sigma^2 \cdot (T - t)$</td></tr>
+<tr><td>Optimal half-spread</td><td>$\delta^* = (\gamma \sigma^2 (T-t))/2 + (2/\gamma) \ln(1 + \gamma/\kappa)$</td></tr>
+<tr><td>AS bid</td><td>$r - \delta^*$</td></tr>
+<tr><td>AS ask</td><td>$r + \delta^*$</td></tr>
+<tr><td>Wall-Mid bid</td><td>$\text{bid wall price} + 1 - \text{skew}$</td></tr>
+<tr><td>Wall-Mid ask</td><td>$\text{ask wall price} - 1 - \text{skew}$</td></tr>
+<tr><td>Hybrid bid</td><td>$\text{bid wall} + 1 - q \gamma \sigma^2$</td></tr>
+<tr><td>Hybrid ask</td><td>$\text{ask wall} - 1 - q \gamma \sigma^2$</td></tr>
+<tr><td>Volatility (rolling)</td><td>std of past $N$ mid changes</td></tr>
+<tr><td>Risk aversion</td><td>sweep $\{0.01, 0.1, 1.0\}$, pick best Sharpe</td></tr>
+<tr><td>Arrival sensitivity</td><td>$\hat\kappa = -\ln(\text{fills at }\delta / \text{fills at touch}) / \delta$</td></tr>
+</table>
+
+<p>You now have the full vocabulary of market making. The next module uses this vocabulary to bet on mean-reversion.</p>
+
+<footer style="margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--border); font-size: 13px; color: var(--muted);">
+<p><a href="README.html">← module README</a> · <a href="source.html">source</a> · <a href="extract.html">extract</a> · <a href="exercises.html">exercises</a></p>
 </footer>
 
 </div>

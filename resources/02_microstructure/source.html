@@ -10,94 +10,71 @@
   body { font: 16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif; color:var(--fg); background:var(--bg); margin:0; padding:0; }
   .wrap { max-width: 820px; margin: 0 auto; padding: 32px 24px 80px; }
   header { border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-bottom: 24px; }
-  h1 { font-size: 28px; margin: 0 0 8px; }
-  h2 { font-size: 20px; margin-top: 32px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+  h1 { font-size: 26px; margin: 0 0 8px; }
+  h2 { font-size: 18px; margin-top: 28px; }
   p { margin: 8px 0; }
   a { color: var(--accent); text-decoration: none; }
   code { background: #f1f1f1; padding: 1px 5px; border-radius: 3px; font-size: 0.92em; font-family: ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
-  blockquote { border-left: 4px solid var(--accent); margin: 16px 0; padding: 4px 16px; background: #f0f7ff; color: #333; }
-  table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 14px; }
-  th, td { border: 1px solid var(--border); padding: 8px 12px; text-align: left; vertical-align: top; }
-  th { background: #f4f4f4; }
-  .main { background: #fff8e1; }
+  ul { padding-left: 22px; }
+  li { margin: 4px 0; }
+  .meta { color: var(--muted); font-size: 14px; }
+  blockquote { border-left: 4px solid var(--accent); margin: 16px 0; padding: 4px 16px; background: #f0f7ff; color: #333; font-size: 14px; }
 </style>
 </head>
 <body>
 <div class="wrap">
 
 <header>
-<h1>Module 02 — Sources</h1>
-<p class="meta">The canonical books and papers that teach this module. Read the chapters listed; skip the rest.</p>
+<h1>Module 02 — Sources (for revision)</h1>
+<p class="meta">Just citations. Read <a href="explain.html">explain.html</a> first; consult these for revision or deeper second pass.</p>
 <p><a href="README.html">← module README</a></p>
 </header>
 
-<h2>Main source (read this first)</h2>
+<blockquote>
+<strong>Reading order:</strong> <a href="explain.html">explain.html</a> first, until you can answer the self-test without re-reading. Then this file for citation, then the source book chapters only if you want a second-pass deep read.
+</blockquote>
 
-<table>
-<tr class="main">
-<td><b>Larry Harris</b>, <i>Trading and Exchanges: Market Microstructure for Practitioners</i>, Oxford University Press 2003.</td>
-</tr>
-</table>
-
-<p>This is the single best book on the topic. Harris was chief economist at the SEC; he knows both the market-maker and the regulator side. It's used as a textbook in most quant programs.</p>
-
-<p><b>Read:</b> Chapters 1–7, 12–14. Skim the rest.</p>
-
+<h2>Main source</h2>
 <ul>
-  <li><b>Ch 1</b> — The trading problem. Why exchanges exist.</li>
-  <li><b>Ch 2</b> — Orders, quotes, market structure. (Basic vocabulary.)</li>
-  <li><b>Ch 3</b> — The limit order book. (How a book works.)</li>
-  <li><b>Ch 4</b> — Dealers and dealers markets.</li>
-  <li><b>Ch 5</b> — Brokers and auction markets.</li>
-  <li><b>Ch 6</b> — Market makers and specialist markets.</li>
-  <li><b>Ch 7</b> — Information, quotes, and trading. (Adverse selection explained.)</li>
-  <li><b>Ch 12</b> — The technology of trading. (How matching engines work.)</li>
-  <li><b>Ch 13</b> — Trade reporting. (The data you get from a feed.)</li>
-  <li><b>Ch 14</b> — Transaction costs and order types. (Market vs limit, etc.)</li>
+  <li><strong>Larry Harris</strong>, <i>Trading and Exchanges: Market Microstructure for Practitioners</i>, Oxford University Press 2003.
+    <ul>
+      <li>Ch 1 — The trading problem.</li>
+      <li>Ch 2 — Orders, quotes, market structure.</li>
+      <li>Ch 3 — The limit order book.</li>
+      <li>Ch 4–5 — Dealers and auction markets.</li>
+      <li>Ch 6 — Market makers and specialist markets.</li>
+      <li>Ch 7 — Information, quotes, and trading (adverse selection).</li>
+      <li>Ch 12–14 — Matching engines, trade reporting, transaction costs.</li>
+    </ul>
+  </li>
+  <li>Where to get: OUP print ~$80; or USC faculty page (Harris posts chapters as free PDFs — Google "Larry Harris Trading and Exchanges market microstructure book chapters PDF" if the link moves).</li>
 </ul>
 
-<p>Where to get it:</p>
+<h2>Supplement</h2>
 <ul>
-  <li>OUP print: ~$80 (worth it for the marginalia).</li>
-  <li>USC faculty page (<a href="https://www-bcf.usc.edu/~lharris/">lharris.usc.edu</a>): the original book chapters are posted as free PDFs. The canonical link is "Trading and Exchanges / Book Chapters" — Google "Harris Trading and Exchanges market microstructure book chapters PDF" if the link moves.</li>
-  <li>Library: most university libraries have it.</li>
+  <li>BIS Working Paper, "Order flow and the bid-ask spread in modern markets" (search on bis.org). Short, math-light, modern. Skim in 30 minutes.</li>
+  <li><a href="https://github.com/jmerle/imc-prosperity-3">jmerle/imc-prosperity-3</a> — code reference for TradingState, datamodel, order book parsing.</li>
 </ul>
 
-<h2>Supplement 1 — BIS microstructure paper</h2>
-
-<table>
-<tr>
-<td><b>Mahmoodzadeh &amp; Marmiroli</b> (or similar BIS authors), "Order flow and the bid–ask spread in modern markets," BIS Working Paper.</td>
-</tr>
-</table>
-
-<p>Short, math-light, modern. Good for visualizing order book heatmaps and thinking about queue priority in modern pro-rata markets. <a href="https://www.bis.org/">bis.org</a> → search "market microstructure."</p>
-
-<h2>Supplement 2 — Timo Diehm's code</h2>
-
-<table>
-<tr>
-<td><a href="https://github.com/TimoDiehm/imc-prosperity-3">github.com/TimoDiehm/imc-prosperity-3</a> — Prosperity 3, 2nd place.</td>
-</tr>
-</table>
-
-<p>Not a book. The code is the source. Read <code>round_1_strategy.py</code> and trace how his <code>OrderBook</code> class parses the CSV. Compare with your <code>code/order_book.py</code> in this module.</p>
-
-<h2>What this module does NOT cover (and where to look)</h2>
-
+<h2>What this module does NOT cover</h2>
 <ul>
-  <li><b>Stochastic order book models</b> (Cont, Bouchaud) — advanced, skip until module 17.</li>
-  <li><b>Queue priority variants</b> (pro-rata, FIFO, hybrid) — module 17.</li>
-  <li><b>Latency arbitrage</b> — module 17.</li>
-  <li><b>Adverse selection models</b> (Glosten–Milgrom, Kyle) — module 17.</li>
+  <li><strong>Queue priority variants</strong> (pro-rata, FIFO) — module 17.</li>
+  <li><strong>Glosten–Milgrom adverse selection model</strong> — module 17.</li>
+  <li><strong>Latency and HFT microstructure</strong> — module 17.</li>
+  <li><strong>Continuous double auctions (Kyle, Cont)</strong> — module 18.</li>
 </ul>
 
-<h2>Reading time budget</h2>
+<h2>For revision only</h2>
+<p>If you want a second-pass deep read after <a href="explain.html">explain.html</a>:</p>
+<ul>
+  <li>Skim Harris Ch 1–3 in 1 hour for vocabulary reinforcement.</li>
+  <li>Read Harris Ch 7 (adverse selection) carefully — it's the conceptual foundation for the realized-spread / effective-spread framework.</li>
+  <li>Read Harris Ch 12 if you want to understand matching engines in detail.</li>
+</ul>
+<p>You do not need to read all of Harris. The chapters above are the only ones that matter for this module.</p>
 
-<p>Harris Ch 1–7: 6 hours. Ch 12–14: 3 hours. Supplement 1: 1 hour. Supplement 2: 2 hours tracing code. Total: ~12 hours. Spread over the week.</p>
-
-<footer style="margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--border); font-size: 13px; color: var(--muted);">
-<p>Once you've read these, move to <a href="extract.html">extract.html</a> for the formulas and code.</p>
+<footer style="margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--border); font-size: 13px; color: var(--muted);">
+<p><a href="README.html">← module README</a> · <a href="explain.html">explain</a> · <a href="extract.html">extract</a> · <a href="exercises.html">exercises</a></p>
 </footer>
 
 </div>

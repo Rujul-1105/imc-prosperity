@@ -3,129 +3,476 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Module 02 — Microstructure · explain</title>
+<title>Module 02 — Microstructure · explain (deep)</title>
 <style>
-  :root { --fg:#1a1a1a; --muted:#666; --accent:#0a66c2; --bg:#fafafa; --border:#e5e5e5; }
+  :root { --fg:#1a1a1a; --muted:#666; --accent:#0a66c2; --bg:#fafafa; --border:#e5e5e5; --alt:#f4f4f4; }
   * { box-sizing: border-box; }
-  body { font: 16px/1.7 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif; color:var(--fg); background:var(--bg); margin:0; padding:0; }
-  .wrap { max-width: 760px; margin: 0 auto; padding: 32px 24px 80px; }
+  body { font: 16px/1.75 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif; color:var(--fg); background:var(--bg); margin:0; padding:0; }
+  .wrap { max-width: 820px; margin: 0 auto; padding: 32px 24px 80px; }
   header { border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-bottom: 24px; }
-  h1 { font-size: 30px; margin: 0 0 8px; }
-  h2 { font-size: 22px; margin-top: 32px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
-  p { margin: 10px 0; }
+  h1 { font-size: 30px; margin: 0 0 8px; line-height: 1.25; }
+  h2 { font-size: 22px; margin-top: 40px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+  h3 { font-size: 18px; margin-top: 28px; color: var(--accent); }
+  h4 { font-size: 16px; margin-top: 20px; color: var(--muted); }
+  p { margin: 12px 0; }
   a { color: var(--accent); text-decoration: none; }
-  code { background: #f1f1f1; padding: 1px 5px; border-radius: 3px; font-size: 0.95em; font-family: ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
-  pre { background: #1e1e1e; color: #d4d4d4; padding: 14px 18px; border-radius: 6px; overflow-x: auto; line-height: 1.45; font-size: 13px; }
-  blockquote { border-left: 4px solid var(--accent); margin: 16px 0; padding: 4px 16px; background: #f0f7ff; color: #333; }
-  .meta { color: var(--muted); font-size: 14px; }
+  code { font-family: ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; background: #f1f1f1; padding: 1px 5px; border-radius: 3px; font-size: 0.92em; }
+  pre { background: #1e1e1e; color: #d4d4d4; padding: 14px 18px; border-radius: 6px; overflow-x: auto; line-height: 1.5; font-size: 13px; }
+  pre code { background: transparent; padding: 0; color: inherit; font-size: inherit; }
+  ul, ol { padding-left: 22px; }
+  li { margin: 8px 0; }
+  blockquote { border-left: 4px solid var(--accent); margin: 16px 0; padding: 8px 16px; background: #f0f7ff; color: #333; }
   table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 14px; }
-  th, td { border: 1px solid var(--border); padding: 8px 12px; text-align: left; }
+  th, td { border: 1px solid var(--border); padding: 8px 12px; text-align: left; vertical-align: top; }
   th { background: #f4f4f4; }
-  .ask { color: #c62828; }
-  .bid { color: #2e7d32; }
+  .meta { color: var(--muted); font-size: 14px; }
+  .numbox { background: #fff8e1; border: 1px solid #f0c36d; border-radius: 6px; padding: 12px 16px; margin: 16px 0; }
+  .numbox h4 { margin-top: 0; color: #b8860b; }
+  .selftest { background: #e8f5e9; border: 1px solid #66bb6a; border-radius: 6px; padding: 12px 16px; margin: 16px 0; }
+  .selftest h4 { margin-top: 0; color: #2e7d32; }
+  .fail { background: #ffebee; border: 1px solid #ef5350; border-radius: 6px; padding: 12px 16px; margin: 16px 0; }
+  .fail h4 { margin-top: 0; color: #c62828; }
+  .conf { background: #f3e5f5; border: 1px solid #ab47bc; border-radius: 6px; padding: 12px 16px; margin: 16px 0; }
+  .conf h4 { margin-top: 0; color: #6a1b9a; }
 </style>
+<script>MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']] } };</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1/themes/prism-tomorrow.css">
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-core.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-python.min.js"></script>
 </head>
 <body>
 <div class="wrap">
 
 <header>
-<h1>Microstructure — the plain-English tour</h1>
-<p class="meta">No math, no jargon. Imagine explaining to a friend who's never traded.</p>
+<h1>Module 02 — Microstructure: a complete teaching</h1>
+<p class="meta">Order book mechanics, the foundation of every trading strategy in Prosperity.</p>
 <p><a href="README.html">← module README</a> · <a href="source.html">source</a> · <a href="extract.html">extract</a> · <a href="exercises.html">exercises</a></p>
 </header>
 
-<h2>The story</h2>
+<p>This document is a complete self-contained tutorial on order book microstructure. By the end you will understand every primitive the Prosperity exchange exposes, the matching engine that processes orders, and the microstructure features (microprice, queue priority, adverse selection) that drive every strategy in the curriculum. You do not need to read the source books to use this — those exist for revision and a deeper second pass.</p>
 
-<p>Imagine a farmer's market where everyone wants to trade apples. There's a big chalkboard. On the left side, in green, people write down how many apples they want to buy and at what price. On the right side, in red, people write how many they want to sell and at what price.</p>
+<h2>1. The story</h2>
 
-<p>Say Alice writes "Buy 10 at $1.00." Bob writes "Buy 5 at $1.00." Charlie writes "Sell 4 at $1.05."</p>
+<p>Imagine a farmer's market where dozens of buyers and sellers of apples mill around a single chalkboard. The board has two columns. The left column, in green, lists buy offers: "I will buy 10 apples at $1.00 each" by Alice, "I will buy 5 apples at $1.00" by Bob. The right column, in red, lists sell offers: "I will sell 4 apples at $1.05" by Charlie.</p>
 
-<p>When a customer walks up and says "I'll buy 4 apples," the system matches them to the cheapest seller. Charlie sells 4 at $1.05. If the customer wanted 8, Charlie sells 4 and then the system goes to the next-cheapest seller (say David at $1.10) for the remaining 4.</p>
+<p>When a customer walks up and says "I want to buy 4 apples right now," the market maker (the chalkboard operator) goes to the right column and finds the cheapest seller. Charlie is the cheapest at $1.05. The customer pays $1.05 to Charlie for 4 apples, and the transaction is done. The chalkboard updates: Charlie's row is removed (he sold his 4), and the next-cheapest seller is now whoever was below him.</p>
 
-<p>That's an order book.</p>
+<p>If the customer wanted 8 apples instead, Charlie sells 4 at $1.05, and then the operator goes down the right column to the next seller — say David at $1.10 — and the customer buys the remaining 4 from David. The chalkboard updates again.</p>
 
-<h2>Bid, ask, mid, spread</h2>
+<p>If a different customer walks up and says "I want to sell 7 apples right now," the operator goes to the left column and matches the highest bidder: Alice at $1.00 first (her 10 apples absorbs the whole 7), the customer receives $1.00 × 7 = $7.00, and Alice's row is updated (she still wants 3 more at $1.00).</p>
 
-<ul>
-  <li><b>Bid</b> = the highest price anyone is willing to <b>pay</b> to buy. From the example: $1.00 (from Alice and Bob).</li>
-  <li><b>Ask</b> = the lowest price anyone is willing to <b>accept</b> to sell. From the example: $1.05 (from Charlie).</li>
-  <li><b>Mid</b> = (bid + ask) / 2. From the example: ($1.00 + $1.05) / 2 = $1.025. The "center" of the market.</li>
-  <li><b>Spread</b> = ask − bid. From the example: $0.05. The cost of round-tripping.</li>
-</ul>
+<p>That is an <b>order book</b>. The chalkboard with two columns of bid and ask prices. The chalkboard operator is the <b>matching engine</b>. The customer is a <b>taker</b>; Alice, Bob, Charlie, David are the <b>makers</b> (they post passive orders and wait to be filled).</p>
 
-<p>The market-maker's whole job is to post both a bid and an ask, get hit on whichever side, and pocket the spread. They are the green and red writing on the chalkboard.</p>
+<p>Everything in market microstructure is a precise formalization of this picture. We'll work through every part in detail.</p>
 
-<h2>Depth</h2>
+<h2>2. Order types</h2>
 
-<p>Now imagine 50 people all wrote "Buy 10 at $0.99." That's a <b>wall</b> — 500 apples of demand at almost the same price. If you walk up trying to sell 100 apples, the chalkboard absorbs the first 500 of demand easily and the price barely moves. That's a <b>deep</b> book.</p>
+<p>An "order" is an instruction a participant gives to the exchange. There are four types you need to know.</p>
 
-<p>If only 5 people wrote "Buy 10 at $0.99," then 50 apples of demand. Your 100-apple sell will eat through all of it and then crash the price down to whoever's next. That's a <b>thin</b> book.</p>
+<h3>2.1 Limit order</h3>
 
-<p><b>Depth</b> = how much volume is sitting at each price level. Deep = liquid = prices move slowly. Thin = illiquid = prices move fast.</p>
+<p>A limit order is a passive order resting on the book. "I will buy up to 10 apples at $1.00 or cheaper." The order has a price, a quantity, and a side (buy or sell). It sits on the book until it is filled by an incoming market order, partially filled (in which case the remaining quantity stays on the book), or cancelled by the participant.</p>
 
-<h2>Microprice</h2>
+<p>Limit orders are the <b>liquidity</b> of the market. The order book is, fundamentally, a sorted list of unfilled limit orders.</p>
 
-<p>Imagine the bid is $1.00 with 500 apples behind it, and the ask is $1.05 with only 5 apples behind it. The "mid" is $1.025. But the real center of gravity is closer to $1.00 — there's a lot of demand, very little supply, the price should be a tiny bit above $1.00, not $1.025.</p>
+<h3>2.2 Market order</h3>
 
-<p>The <b>microprice</b> is a smarter "center" that leans toward the side with more volume:</p>
+<p>A market order is an aggressive order that wants to trade right now at whatever the best available price is. "Buy 4 apples at the cheapest available price." The matching engine walks the book from the best price, filling as much as it can at each level, until the order is complete or the book runs out of liquidity.</p>
+
+<p>Market orders are <b>takers</b>; they pay the spread. They get certainty of execution at the cost of price.</p>
+
+<h3>2.3 Cancel</h3>
+
+<p>A cancel removes a limit order from the book. It does not generate a trade. "Cancel my $1.00 bid for 10 apples." The order is removed; the book updates.</p>
+
+<h3>2.4 Modify (replace)</h3>
+
+<p>Some exchanges allow a limit order to be modified in place (changing the price or quantity). Often the modified order loses its queue position — it gets placed at the back of the new price level rather than maintaining its original place. Prosperity does not have modify; you cancel and resubmit.</p>
+
+<h2>3. The order book</h2>
+
+<p>Formally, the order book is a pair of sorted lists. The <b>bid side</b> is a list of (price, volume) pairs, sorted <i>descending</i> by price. The <b>ask side</b> is a list of (price, volume) pairs, sorted <i>ascending</i> by price. Both lists are kept sorted after every operation.</p>
+
+<p>Each entry is called a <b>level</b>. The <b>top of book</b> is the best bid and the best ask. Deeper levels are worse prices for takers (lower bids if you're selling, higher asks if you're buying).</p>
+
+<p>A minimal Python representation (the team will build a full one in exercises):</p>
+
+<pre><code class="language-python">bids = [(99, 10), (98, 30), (97, 20)]   # sorted DESC by price
+asks = [(101, 5), (102, 40), (103, 20)] # sorted ASC by price
+</code></pre>
+
+<p>This book says: best bid is 99 (with 10 units), best ask is 101 (with 5 units), and the book has 3 levels deep on each side.</p>
+
+<h2>4. The five primitives</h2>
+
+<p>From the order book we derive five quantities that everything else in this curriculum builds on. They are the vocabulary of microstructure.</p>
+
+<table>
+<tr><th>Quantity</th><th>Symbol</th><th>Formula</th><th>Worked example (book above)</th></tr>
+<tr><td>Best bid</td><td>$p^b$</td><td>First element of <code>bids</code></td><td>$p^b = 99$</td></tr>
+<tr><td>Best ask</td><td>$p^a$</td><td>First element of <code>asks</code></td><td>$p^a = 101$</td></tr>
+<tr><td>Bid volume at touch</td><td>$v^b$</td><td>Volume of best bid</td><td>$v^b = 10$</td></tr>
+<tr><td>Ask volume at touch</td><td>$v^a$</td><td>Volume of best ask</td><td>$v^a = 5$</td></tr>
+<tr><td>Mid price</td><td>$p^m$</td><td>$(p^b + p^a) / 2$</td><td>$p^m = 100$</td></tr>
+</table>
+
+<p>The mid is the "center" of the market. It is a first approximation of fair value. A symmetric book (same volume on both sides) makes it a good estimate; an asymmetric book is misleading, which is why we need microprice.</p>
+
+<h2>5. The spread</h2>
+
+<p>The <b>spread</b> is the difference between the best ask and the best bid:</p>
 
 <blockquote>
-microprice = (bid_volume × ask + ask_volume × bid) / (bid_volume + ask_volume)
+$s = p^a - p^b$
 </blockquote>
 
-<p>In our example: (500 × $1.05 + 5 × $1.00) / 505 = ($525 + $5) / 505 = $530 / 505 ≈ $1.0495. That's the better "fair value" estimate.</p>
+<p>For our example book, $s = 101 - 99 = 2$. The spread is the market-maker's gross revenue per round-trip trade. A market-maker who buys at 99 and sells at 101 makes $2$ per share.</p>
 
-<p>Timo Diehm's Wall-Mid strategy uses the microprice as the center of where to post his quotes. <a href="../01_past_winners/01_timo_diehm_p3.html#wallmid">See the case study</a>.</p>
+<p>The spread is also the cost of taking liquidity with a market order. If you market-buy 1 share, you pay 101 instead of the "fair" 100; the $1 difference is the spread cost on the buy side. (For 1 share, you pay 1 tick above mid; the total cost is half the spread, $1. The market-maker who sold to you keeps the other half.)</p>
 
-<h2>Queue priority</h2>
+<h3>5.1 What determines the spread's width?</h3>
 
-<p>Back to the chalkboard. Say three people all wrote "Buy 10 at $1.00" at different times — Alice first, then Bob, then Charlie. If a seller shows up, who gets filled first?</p>
-
-<p>Most exchanges say: <b>price-time priority</b>. Best price first; among equal prices, the one who wrote it first. So Alice fills first, then Bob, then Charlie.</p>
-
-<p>But Prosperity's exchange uses a different rule: <b>no queue priority</b>. Whoever happens to match gets matched. This is the "1-tick-better-pricing" alpha — if you submit a buy at $1.005 when everyone else is at $1.00, you get filled even though you're last in line.</p>
-
-<p>This is huge. It means in Prosperity you can <b>always</b> out-prioritize the existing book by 1 tick. The catch: if you're 1 tick better, you're paying more / getting less, so the spread you capture is 1 tick tighter. The strategy works when 1 tick is &lt; your expected edge.</p>
-
-<h2>Market vs limit orders</h2>
-
-<p>Two ways to enter the market:</p>
-
+<p>The spread is set by the competition among market-makers, balanced by the risk of being picked off. Wider when:</p>
 <ul>
-  <li><b>Market order</b>: "I want to buy <i>right now</i> at whatever the cheapest seller asks." Fills immediately, but you pay the spread. Used when you have strong information and need to act fast.</li>
-  <li><b>Limit order</b>: "I want to buy at $1.00 or cheaper. If no one sells that cheap, leave my order on the board." Doesn't fill unless the price reaches your level. Used when you want to provide liquidity and earn the spread.</li>
+  <li>Volatility is high (more chance of being picked off).</li>
+  <li>Inventory risk is high (market-makers don't want to hold positions).</li>
+  <li>Information asymmetry is high (informed traders are present).</li>
+  <li>The book is thin (no competition forces the spread down).</li>
 </ul>
 
-<p>Prosperity supports both, with the rule above (no queue priority). The whole point of market-making strategies is to use <b>limit orders</b> as the maker and capture the spread.</p>
+<p>Tighter when:</p>
+<ul>
+  <li>Volatility is low.</li>
+  <li>Many market-makers are competing for the same trade.</li>
+  <li>The asset is highly liquid and well-understood.</li>
+</ul>
 
-<h2>Inventory and PnL</h2>
+<p>For Prosperity, the spread on AMETHYSTS (FFV, low vol, many market-makers) is typically 1-2 ticks. The spread on a mean-reverting asset in a calm period is similar. The spread on a volatile or illiquid product is wider.</p>
 
-<p>Your <b>position</b> (also called <b>inventory</b>) is how much of the asset you currently hold. If you've bought 50 and sold 30, you're <b>long 20</b>. Long = positive position. Short = negative position.</p>
+<h2>6. Depth</h2>
 
-<p>Your <b>PnL</b> (profit and loss) is what you'd make if you flattened your position right now at the current mid price:</p>
+<p><b>Depth</b> is how much volume is sitting at each price level. The order book has a "wall" of buyers at $p^b$ with $v^b$ units, a "wall" of sellers at $p^a$ with $v^a$ units, and so on for deeper levels.</p>
+
+<p>Two useful depth measures:</p>
+
+<h3>6.1 Top-of-book depth</h3>
+
+<p>Just the volume at the best bid and best ask. For our example: $v^b = 10$ and $v^a = 5$. The top of book tells you how much you can trade without moving the price past the first level.</p>
+
+<h3>6.2 Cumulative depth</h3>
+
+<p>Total volume in the first $k$ levels on one side:</p>
 
 <blockquote>
-PnL = sum of (sell_price − buy_price) for closed trades + current_position × (current_mid − average_entry_price)
+$D^b(k) = \sum_{i=1}^{k} v_i^b$
 </blockquote>
 
-<p>Prosperity ranks you by PnL. Higher PnL = better rank.</p>
+<p>For our example book, cumulative bid depth through 3 levels is $10 + 30 + 20 = 60$. This is how much you can buy (sell into the bids) before exhausting 3 levels of support.</p>
 
-<h2>Adverse selection, finally</h2>
+<p>Cumulative depth matters when you're sizing an order. If you want to buy 50 units without moving the price more than 2 ticks, you check that $D^a(2) \geq 50$. If the depth at 2 levels is only 30, your order will eat into a 3rd level and move the price more.</p>
 
-<p>Imagine you're a market-maker posting a bid of $1.00 and an ask of $1.05. A trader comes and sells to you at $1.00. Then they immediately come back and buy from you at $1.05. You just made $0.05 — that's your spread.</p>
+<h3>6.3 Walls</h3>
 
-<p>But if the same trader only does that once, and then stops, and the next trade that comes through is someone selling to you at $1.00 again, and the price then crashes to $0.95… you got <b>adversely selected</b>. The smart trader knew the price was about to fall and used you as the exit. Your $0.05 spread didn't cover the $0.05 loss on the position you were left holding.</p>
+<p>A <b>wall</b> is a single level whose volume is much larger than its neighbors. The convention: a wall is a level with volume $\geq 3\times$ the median of the top-3 levels on that side. For our example:</p>
+<ul>
+  <li>Top-3 bid volumes: 10, 30, 20. Median is 20. Walls are levels with volume $\geq 60$. None of the top-3 bid levels qualify. No bid wall.</li>
+  <li>Top-3 ask volumes: 5, 40, 20. Median is 20. Walls are levels with volume $\geq 60$. None qualify. No ask wall.</li>
+</ul>
 
-<p>Adverse selection is the market-maker's enemy. The Avellaneda–Stoikov formula in <a href="../03_market_making/README.html">module 03</a> is a way to widen your quotes when adverse selection risk is high.</p>
+<p>Walls are visible commitments by participants. They reveal intent. A 500-unit bid wall at $p^b$ means "this participant wants to buy 500 around this price." In some markets walls are spoofing (placed then cancelled), but in Prosperity they tend to be real. The Wall-Mid strategy in module 03 exploits walls.</p>
 
-<h2>Pulling it together</h2>
+<h2>7. Microprice</h2>
 
-<p>The order book is the heart of everything. Every strategy reads it, writes to it, and tries to be one tick better than the next person. If you can read a book and feel what the spread, depth, microprice, and queue priority are telling you, you're ready for the rest of the curriculum.</p>
+<p>The mid price treats both sides of the book equally: $p^m = (p^b + p^a) / 2$. But the volumes are often very different. Consider:</p>
 
-<p>Open the <a href="extract.html">extract</a> next to see the same concepts in formulas and code, then the <a href="exercises.html">exercises</a> to test yourself on a real P3 dataset.</p>
+<blockquote>
+Book A: bid 99 (vol 10), ask 101 (vol 5). Mid = 100.<br>
+Book B: bid 99 (vol 5), ask 101 (vol 10). Mid = 100.
+</blockquote>
 
-<footer style="margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--border); font-size: 13px; color: var(--muted);">
-<p><a href="README.html">← module README</a> · <a href="source.html">source</a></p>
+<p>Both books have the same mid. But Book A has way more buyers than sellers; the price should lean up. Book B has way more sellers; the price should lean down. The mid is the same, but the "true" center of gravity is different.</p>
+
+<p>The <b>microprice</b> weights the inside levels by volume:</p>
+
+<blockquote>
+$p^\mu = \frac{v^b \cdot p^a + v^a \cdot p^b}{v^b + v^a}$
+</blockquote>
+
+<p>For Book A: $p^\mu = (10 \cdot 101 + 5 \cdot 99) / 15 = (1010 + 495) / 15 = 1505/15 \approx 100.33$. The microprice is above mid; the price should rise.</p>
+
+<p>For Book B: $p^\mu = (5 \cdot 101 + 10 \cdot 99) / 15 = (505 + 990) / 15 = 1495/15 \approx 99.67$. The microprice is below mid; the price should fall.</p>
+
+<p>The microprice is a strictly better estimator of the next-tick mid than the simple mid, especially when the book is asymmetric. In backtests, strategies that use microprice as the "fair value" anchor outperform those that use simple mid.</p>
+
+<div class="conf">
+<h4>Common confusion #1</h4>
+<p>The microprice is NOT a market order's expected fill price. The expected fill price for a market-buy of 1 unit is $p^a$, the ask. The microprice is an estimate of the latent "true" mid that the visible book is approximating. The two are different things.</p>
+</div>
+
+<h2>8. Queue priority</h2>
+
+<p>When many participants post limit orders at the same price, who gets filled first when a market order comes in?</p>
+
+<p>Three common rules across exchanges:</p>
+
+<h3>8.1 Price-time priority (FIFO at each price)</h3>
+
+<p>Best price first. Within the same price, the order that arrived first gets filled first. This is the NYSE/NASDAQ rule.</p>
+
+<p>Example: Three bids at $99 — Alice (10, arrived 10:00:01), Bob (10, arrived 10:00:02), Charlie (10, arrived 10:00:03). A market sell of 15 units hits the bids. Alice's 10 fill first, then Bob's 5. Charlie's 10 is partially filled (5 of his 10) and the remaining 5 stay on the book.</p>
+
+<h3>8.2 Pro-rata</h3>
+
+<p>Best price first. Within the same price, the order is split proportionally to the volume posted at that level. Some exchanges (like CME on certain products) do this.</p>
+
+<p>Example: same three bids, each 10 units (30 total at $99). A market sell of 15 units. Each bidder gets 5 (15/30 × 10 = 5).</p>
+
+<h3>8.3 No queue priority (Prosperity)</h3>
+
+<p>In Prosperity, <b>queue priority is essentially broken</b>. Whoever submitted the most recent order at the best price gets filled first if they are at least as good as the current best. The practical effect: you can always out-prioritize the existing book by being 1 tick better. If the best bid is $99 and you post a bid at $100, you fill first even though you arrived later.</p>
+
+<p>This is a massive edge. The "1-tick-better" alpha is real in Prosperity and absent in most real markets. Strategies that exploit it (Wall-Mid, AS with thin spreads) make money in the no-queue-priority world that would be competed away in real markets.</p>
+
+<div class="numbox">
+<h4>Worked example: 1-tick-better alpha</h4>
+<p>Book: bid 99 (vol 50), ask 101 (vol 50). You submit a bid at 100. The next market-sell of any size fills YOUR bid first (because 100 &gt; 99). You buy at 100, then sell later at 101 (or higher) for a 1-tick profit per share. The market-maker who posted the original 99-bid doesn't get filled even though they were there first.</p>
+<p>This works as long as 1 tick of profit exceeds the round-trip cost (fees, slippage). In Prosperity, fees are often 0, so 1 tick of profit is enough.</p>
+</div>
+
+<h2>9. The matching engine</h2>
+
+<p>The matching engine is the software that processes orders and updates the book. In Prosperity, the rules are:</p>
+
+<ol>
+  <li>When a market order comes in, walk the book from the best price on the opposite side, filling at each level until the order is satisfied or the book runs out.</li>
+  <li>When a limit order comes in at a price that crosses the spread (e.g., a buy limit at $p > p^a$): fill against the opposite side (same as market for the crossing portion), then post the remainder on the book.</li>
+  <li>When a limit order comes in at a price that doesn't cross (e.g., a buy limit at $p \leq p^b$): just post on the book.</li>
+  <li>When a cancel comes in: remove the specific order from the book.</li>
+</ol>
+
+<p>The "no queue priority" rule is layered on top: when filling, the most recent order at the best price is filled first (subject to the price check). This is what gives the 1-tick-better alpha.</p>
+
+<h3>9.1 A market order walk-through</h3>
+
+<p>Book: bid 99 (10), 98 (30), 97 (20); ask 101 (5), 102 (40), 103 (20). You submit a market-buy of 25 units.</p>
+
+<ol>
+  <li>Best ask is 101 with 5 units. Buy 5 at 101. (Cumulative: 5 bought, paid $505.)</li>
+  <li>Next ask is 102 with 40 units. Buy 20 at 102. (Cumulative: 25 bought, paid $505 + $2040 = $2545.)</li>
+  <li>Order is complete. Book updates: ask 101 removed (was 5), ask 102 now has 20 left.</li>
+</ol>
+
+<p>Total cost: $2545 for 25 units = average $101.80 per share. That's higher than the simple mid ($100) because the market order paid the spread at each level.</p>
+
+<h2>10. Adverse selection</h2>
+
+<p><b>Adverse selection</b> is the risk that the person willing to trade with you knows something you don't.</p>
+
+<p>Imagine you're a market-maker. You post a bid of $99 and an ask of $101. A trader comes in and sells to you at $99. Why did they sell? Because they think the true value is below $99 — they expect the price to fall. They used you as the exit. Now you own a stock that you paid $99 for, and the next tick it's $98.</p>
+
+<p>You "won" the $2 spread on the trade ($1 each side). But the price moved against you by $1 immediately after. Net: you didn't actually make money; the informed trader did.</p>
+
+<p>Adverse selection is the market-maker's tax on being wrong about information. It can erase the spread revenue entirely. The Avellaneda–Stoikov formula in module 03 is, in part, a way to <b>widen the spread when adverse selection is high</b> to compensate.</p>
+
+<h3>10.1 Measuring adverse selection</h3>
+
+<p>After a fill, the relevant question is: did the price move against me?</p>
+
+<p>Define the <b>effective spread</b> (what you paid/received vs the mid at the moment of fill) and the <b>realized spread</b> (what you effectively made after holding the position for $T$ ticks):</p>
+
+<blockquote>
+<b>Effective spread</b> (signed): $2 \cdot \text{sign} \cdot (p_f - p^m_0)$<br>
+<b>Realized spread</b> (signed): $2 \cdot \text{sign} \cdot (p_f - p^m_T)$
+</blockquote>
+
+<p>where "sign" is $+1$ for a buy and $-1$ for a sell, $p_f$ is the fill price, $p^m_0$ is the mid at fill, and $p^m_T$ is the mid $T$ ticks later.</p>
+
+<p>The <b>adverse selection cost</b> is:</p>
+
+<blockquote>
+$\text{adverse selection} = \text{effective spread} - \text{realized spread}$
+</blockquote>
+
+<p>A positive adverse selection means the price moved against you. It measures how much of your "spread revenue" was eaten by the next-tick move.</p>
+
+<div class="numbox">
+<h4>Worked example: adverse selection in numbers</h4>
+<p>You buy 1 unit at $100.10 (the ask, with mid = $100).<br>
+Effective spread: $2 \cdot (+1) \cdot (100.10 - 100) = 0.20$.<br>
+10 ticks later, the mid is $99.90. You mark-to-market: you're long 1 unit at $99.90, paid $100.10, loss of $0.20.<br>
+Realized spread: $2 \cdot (+1) \cdot (100.10 - 99.90) = 0.40$.<br>
+Adverse selection: $0.20 - 0.40 = -0.20$.<br>
+</p>
+<p>Wait, that gives a negative number. Let me re-derive. The realized spread is meant to capture what you "really" made. If you bought at $100.10 and the price fell to $99.90, you made nothing. The realized spread should be $0$, not $0.40$.</p>
+<p>The correct realized-spread formula is: $2 \cdot \text{sign} \cdot (p^m_T - p^m_0)$, not involving the fill price. Let me restate:</p>
+<p>Effective spread = $2 \cdot \text{sign} \cdot (p_f - p^m_0)$ (signed; positive = good for you)<br>
+Realized spread = $2 \cdot \text{sign} \cdot (p^m_T - p^m_0)$ (signed; positive = price moved in your favor after fill)<br>
+Adverse selection = effective spread − realized spread<br>
+</p>
+<p>Same example: effective = $0.20$. Realized = $2 \cdot (+1) \cdot (99.90 - 100) = -0.20$. Adverse selection = $0.20 - (-0.20) = 0.40$. This makes sense: $0.20$ of spread revenue, $0.40$ of mark-to-market loss, net $-0.20$. The adverse selection component is $0.40$, which exceeds the spread revenue. You lost money.</p>
+</div>
+
+<p>The standard way to report adverse selection in a backtest: the average across all fills. If it's small, your strategy is robust. If it's large, you're getting picked off.</p>
+
+<h2>11. Realized spread and the PnL decomposition</h2>
+
+<p>After a round-trip fill (buy then sell, or sell then buy), your realized spread is:</p>
+
+<blockquote>
+$\text{realized spread (round-trip)} = \text{sell price} - \text{buy price} - 2 \cdot \text{fees}$
+</blockquote>
+
+<p>This is what you "made" on the trade, before considering the time value of money or the opportunity cost. Across many round-trips, the average realized spread is your gross PnL per trade.</p>
+
+<p>For a market-making strategy, the standard PnL decomposition is:</p>
+
+<blockquote>
+<b>Gross PnL = spread capture + inventory drift + rebalance cost + fees</b>
+</blockquote>
+
+<p>where:</p>
+<ul>
+  <li><b>Spread capture</b> = sum of (sell_price - buy_price) for closed round-trips.</li>
+  <li><b>Inventory drift</b> = mark-to-market PnL on the open position (price you paid vs current mid).</li>
+  <li><b>Rebalance cost</b> = PnL from closing out the final position at end-of-round.</li>
+  <li><b>Fees</b> = explicit fees paid.</li>
+</ul>
+
+<p>Leo Hawking's rule (from his P4 retrospective): "If spread capture is negative, the strategy is broken — even if total PnL is positive from drift." The spread capture is the only reliable component of PnL. Drift and rebalance can be lucky. The team should always decompose and look at spread capture first.</p>
+
+<h2>12. Queue position in Prosperity</h2>
+
+<p>Prosperity's no-queue-priority rule has implications for how the team thinks about limit orders.</p>
+
+<p>You post a bid at $99$ (10 units). The current best bid is $98$ (50 units). Your bid is better by $1$. When a market-sell comes in, YOUR bid fills first (because $99 > 98$). The 50 units at $98$ only get filled if the sell is larger than 10.</p>
+
+<p>This means: posting a limit order 1 tick better than the existing best is a guaranteed near-certain fill (unless the order is cancelled first). The cost: you paid 1 tick more than you would have at the worse price. Whether that's profitable depends on what happens to the price after you fill.</p>
+
+<p>The "Wall-Mid" strategy (module 03) exploits this: post your bid at the price just inside the largest visible wall, so you fill before the wall does. Profit per fill: 1 tick (the spread between you and the wall) minus fees.</p>
+
+<h2>13. Worked example: reading a real order book tick</h2>
+
+<p>Suppose you receive the following data from the Prosperity exchange for product "AMETHYSTS" at timestamp 1000:</p>
+
+<pre><code class="language-text">bid_price_1 = 9998  bid_volume_1 = 5
+bid_price_2 = 9997  bid_volume_2 = 12
+bid_price_3 = 9996  bid_volume_3 = 8
+ask_price_1 = 10002 ask_volume_1 = 7
+ask_price_2 = 10003 ask_volume_2 = 10
+ask_price_3 = 10004 ask_volume_3 = 6
+</code></pre>
+
+<p>What does this tell you?</p>
+
+<ul>
+  <li>Best bid: 9998, with 5 units.</li>
+  <li>Best ask: 10002, with 7 units.</li>
+  <li>Mid: 10000.</li>
+  <li>Spread: 4 (this is wide; AMETHYSTS is a low-vol asset, the spread should normally be 1-2).</li>
+  <li>Microprice: $(5 \cdot 10002 + 7 \cdot 9998) / 12 = (50010 + 69986) / 12 = 119996 / 12 = 9999.67$.</li>
+  <li>Microprice is below mid (9999.67 &lt; 10000), so the price should drop next tick.</li>
+  <li>Cumulative bid depth through 3 levels: 5 + 12 + 8 = 25 units.</li>
+  <li>Cumulative ask depth through 3 levels: 7 + 10 + 6 = 23 units.</li>
+  <li>Walls: top-3 bid volumes are 5, 12, 8 → median = 8 → wall threshold = 24. None of the bid levels exceed 24. No bid wall.</li>
+</ul>
+
+<p>What trade does this book suggest? The microprice says sell (price is too high). The spread is wide, so a market-maker could post both sides inside the existing book and capture some of the spread. The team should be careful: AMETHYSTS has a fair value of 10000, the mid is 10000, but the spread is 4 ticks. There's an arbitrage opportunity for a market-maker willing to post inside the existing levels.</p>
+
+<h2>14. Common confusions</h2>
+
+<div class="conf">
+<h4>Common confusion #2: "the mid is the fair value"</h4>
+<p>The mid is a first approximation, not the truth. Use microprice when the book is asymmetric. Use a Bayesian estimate (module 11) when you have prior information about the fair value (e.g., FFV products where you know the FV).</p>
+</div>
+
+<div class="conf">
+<h4>Common confusion #3: "a tight spread is always better"</h4>
+<p>For takers, yes (lower cost). For market-makers, no (less revenue per fill). For a strategy that does both, you need to balance the two. A persistent tight spread often means low volatility, which is also less opportunity for mean-reversion strategies.</p>
+</div>
+
+<div class="conf">
+<h4>Common confusion #4: "cumulative depth tells me how much I can trade"</h4>
+<p>Cumulative depth at the time you check is not a guarantee. Other participants' orders can be cancelled between your check and your trade. Always size with a safety margin.</p>
+</div>
+
+<div class="conf">
+<h4>Common confusion #5: "queue priority is FIFO everywhere"</h4>
+<p>It is NOT FIFO in Prosperity. Prosperity has no queue priority; you can always out-prioritize the existing book by 1 tick. This is the single biggest difference between Prosperity and most real exchanges.</p>
+</div>
+
+<h2>15. Failure modes</h2>
+
+<div class="fail">
+<h4>Failure mode 1: thin book, wide spread</h4>
+<p>If the book is thin (top-of-book volume is small), the spread will likely widen further on your trade. Sizing orders conservatively is critical. Don't assume "the book has 5 units at the ask" means "I can buy 5 at the ask"; the order may eat into deeper levels and move the price.</p>
+</div>
+
+<div class="fail">
+<h4>Failure mode 2: spoofing walls</h4>
+<p>A wall can be cancelled before you fill. In real markets, spoofing is illegal. In Prosperity, walls are usually real but not guaranteed. If a wall disappears right before your fill, you end up with a position you didn't want.</p>
+</div>
+
+<div class="fail">
+<h4>Failure mode 3: adverse selection in volatile rounds</h4>
+<p>When volatility is high, market orders are more likely to come from informed traders. Your posted limit orders get picked off more often. The spread you earn is not enough to compensate. The Avellaneda–Stoikov formula (module 03) widens the spread in volatile conditions to address this.</p>
+</div>
+
+<div class="fail">
+<h4>Failure mode 4: stale microprice</h4>
+<p>The microprice is computed from a snapshot. Between the snapshot and your action, other participants' orders can change. The microprice can be stale. Use it as one input among many, not the only input.</p>
+</div>
+
+<h2>16. Connection to Prosperity</h2>
+
+<p>Every Prosperity product is traded on an L3 (price, volume per level) order book. You read the book in <code>state.order_depths[product]</code> and write orders via your <code>Trader.run(state)</code> method. The team will use every primitive in this module across every strategy:</p>
+
+<ul>
+  <li><b>Market making</b> (module 03): bid, ask, microprice, queue priority, adverse selection, PnL decomposition.</li>
+  <li><b>Mean reversion</b> (module 04): mid price as the "fair value" reference for the z-score.</li>
+  <li><b>Basket arb</b> (module 06): mid of each leg to compute NAV.</li>
+  <li><b>Cross-exchange arb</b> (module 08): microprice as the fair value on each exchange.</li>
+  <li><b>Options</b> (module 07): mid of the underlying for delta hedging.</li>
+  <li><b>Grid jumps</b> (module 16): the displayed price is exactly the grid-projected mid.</li>
+</ul>
+
+<p>Master this module and the vocabulary is yours.</p>
+
+<h2>17. Self-test</h2>
+
+<p>Try to answer these without re-reading. If you can, you've internalized the module.</p>
+
+<div class="selftest">
+<ol>
+  <li>What is the difference between the mid and the microprice? When is microprice strictly better?</li>
+  <li>You post a bid at $99$ when the existing best bid is $98$. A market-sell of 20 units arrives. What happens, assuming Prosperity's no-queue-priority rule?</li>
+  <li>The book is bid 99 (vol 3), ask 101 (vol 3). You market-buy 1 unit. At what price do you fill? What is the effective spread on this trade?</li>
+  <li>You buy at $100.10 with mid = $100$. 10 ticks later the mid is $100.20$. Compute: (a) effective spread, (b) realized spread, (c) adverse selection. Did the strategy profit or lose?</li>
+  <li>What is a "wall" and why is it relevant to the Wall-Mid strategy (preview of module 03)?</li>
+  <li>You run a backtest on a past round. Your gross PnL is +200, but the spread capture component is -50. The inventory drift is +250. Leo Hawking would say what?</li>
+  <li>What is the difference between FIFO and pro-rata queue priority? Which does Prosperity use? What does this mean for your trading strategy?</li>
+</ol>
+<p>Answers: (1) Microprice weights by volume; better when book is asymmetric. (2) You fill first (up to your quantity); remaining fills the $98$ bidders. (3) You fill at $101$; effective spread is $2$. (4) Effective = $0.20$; realized = $0.40$; adverse selection = $-0.20$ (i.e., adverse selection ate the spread); the trade was a winner. (5) A single level with volume much higher than its neighbors; reveals commitment by a participant; Wall-Mid places quotes around the wall. (6) The strategy is broken — spread capture is the only reliable component; drift is luck. (7) FIFO = time order; pro-rata = volume split; Prosperity has no queue priority; this is the 1-tick-better alpha.</p>
+</div>
+
+<h2>18. Summary cheat-sheet</h2>
+
+<table>
+<tr><th>Quantity</th><th>Formula</th><th>Where in Prosperity</th></tr>
+<tr><td>Mid</td><td>$(p^b + p^a)/2$</td><td><code>order_depths[product]</code> derived</td></tr>
+<tr><td>Microprice</td><td>$(v^b p^a + v^a p^b)/(v^b + v^a)$</td><td>Derived in your code</td></tr>
+<tr><td>Spread</td><td>$p^a - p^b$</td><td>Derived</td></tr>
+<tr><td>Cumulative depth $k$ levels</td><td>$\sum_{i=1}^k v_i$</td><td>Derived</td></tr>
+<tr><td>Wall</td><td>Single level $\geq 3\times$ median of top-3</td><td>Derived (Wall-Mid input)</td></tr>
+<tr><td>Effective spread</td><td>$2 \cdot \text{sign} \cdot (p_f - p^m_0)$</td><td>Per fill</td></tr>
+<tr><td>Realized spread</td><td>$2 \cdot \text{sign} \cdot (p^m_T - p^m_0)$</td><td>$T$ ticks after fill</td></tr>
+<tr><td>Adverse selection</td><td>Effective − Realized</td><td>Per fill, averaged</td></tr>
+</table>
+
+<p>You now have the complete vocabulary of microstructure. The next module uses this vocabulary to build the simplest strategy: market making.</p>
+
+<footer style="margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--border); font-size: 13px; color: var(--muted);">
+<p><a href="README.html">← module README</a> · <a href="source.html">source</a> · <a href="extract.html">extract</a> · <a href="exercises.html">exercises</a></p>
 </footer>
 
 </div>
